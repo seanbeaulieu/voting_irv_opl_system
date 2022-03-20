@@ -1,2 +1,2 @@
-: Put all test logs along with all test files that were used for testing here (e.g. 
-: CSV files used for testing)
+: Place all documentation documents here.  We expect you to use javadocs
+: or doxygen to generate your formal documentation of the code.  
