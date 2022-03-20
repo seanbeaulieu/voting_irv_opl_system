@@ -1,2 +1,2 @@
 # repo-Team21
-(Jasper Rutherford, Ann Huynh, Shey Pemberton)
+(Jasper Rutherford, Ann Huynh, Shey Pemberton, Sean Beaulieu)
