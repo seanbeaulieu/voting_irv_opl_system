@@ -1,1 +1,2 @@
-
+: If you have other files that you are unsure where to store, place them here.  
+: Use good naming conventions for all files
