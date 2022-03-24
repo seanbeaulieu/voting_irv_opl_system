@@ -46,13 +46,19 @@ public class ElectionIRV extends Election
             // Need to handle shuffle check here
             // Possibly add shuffle as a function in ElectionIRV
 
+            if (!shuffle) {
+                // shuffle
+            }
+
+            
+
             // While there are still unassigned ballots
             while (numBallots != 0) {
 
             }
 
 
-            
+
         }
     }
 
@@ -75,6 +81,9 @@ public class ElectionIRV extends Election
 
     // Note - might not need to loop, and can instead read line by line. However, it can also be
     // helpful to do it all in one pass, check for a majority, and then go reassigning ballots
+    // Could/Should change to single line reading and loop in calcResults in order to track order
+
+    // Does this need to work where all the ballots are just read into unassigned ballots?
     public boolean readFirstChoiceBallots() {
 
         // read each line
@@ -101,5 +110,41 @@ public class ElectionIRV extends Election
 
     }
 
+    /**
+     * this function checks all of the candidates for a candidate that has the majority (>50%) amount of first choice ballots
+     */
+    public boolean checkForWinner() {
+
+        // Loop through all candidates and tally the amount of first choice ballots they have
+        
+        int indexOfWinner;
+        int numBallotsOfTemp;
+
+        // WILL NEED TO 
+        for (int i = 0; i < numCandidates; i++) {
+
+            // create candidate
+            CandidateIRV candidate = (CandidateIRV) candidates.get(index);
+
+            // check amount of ballots
+            int numBallotsCandHas = candidate.ballots.size();
+
+            // Compare the ballots. This is where we would need to handle tie edgecases. Lot of code to write here.
+            if (numBallotsCanHas > numBallotsOfTemp) {
+                indexOfWinner = i;
+                numBallotsOfTemp = numBallotsCandHas;
+            }
+
+            // Check that the numberBallots 
+
+            // IN THE EVENT OF A TIE
+            return false;
+        }
+
+        // Set the candidate with the most first place votes as the winner
+        CandidateIRV winner_candidate = (CandidateIRV) candidates.get(index);
+        winner_candidate.won = true;
+        return true;
+    }
 
 }

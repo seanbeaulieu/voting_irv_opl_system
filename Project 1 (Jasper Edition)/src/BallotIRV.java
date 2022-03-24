@@ -14,6 +14,8 @@ public class BallotIRV {
                                         // do a simple queue add based on the array passed in. Shana mentioned in class
                                         // how for IRV, it might be helpful to assign numbers to the candidates. 
 
+        CandidateIRV currCandidate; // initialize the first choice candidate and update the next preferrential candidate as 
+                                    // candidates get eliminated. Use nextCandidate() in order to update.
     }
 
     public nextCandidate() {
