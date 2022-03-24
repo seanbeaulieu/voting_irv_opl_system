@@ -13,6 +13,8 @@ public class ElectionIRV extends Election
      */
     private ArrayList<BallotIRV> unassignedBallots;
 
+
+    Collections.shuffle(ballots);
     /**
      * Creates an ElectionIRV
      */
