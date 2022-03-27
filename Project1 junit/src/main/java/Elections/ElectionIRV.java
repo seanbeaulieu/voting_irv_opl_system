@@ -27,8 +27,9 @@ public class ElectionIRV extends Election
 
     /**
      * Creates an ElectionIRV with the provided fileHandler
+     *
      * @param fileHandler how the election will get inputs/log to output files
-     * @param shuffle whether or not the election should shuffle the ballots
+     * @param shuffle     whether or not the election should shuffle the ballots
      */
     public ElectionIRV(FileHandler fileHandler, boolean shuffle)
     {
@@ -109,6 +110,7 @@ public class ElectionIRV extends Election
 
     /**
      * Parses candidates from the supplied line
+     *
      * @param line a string representation of candidates
      * @return true if this succeeded, false otherwise
      */
@@ -187,8 +189,9 @@ public class ElectionIRV extends Election
                     if (candidate.getNumVotes() > voteGoal)
                     {
                         //mark them down as the winner
-                        candidate.win();
+                        winners.add(candidate);
                         winner = candidate;
+
                         fileHandler.auditLog(candidate.getName() + " now has " + candidate.getNumVotes() + " and has won the election!");
 
                         //stop looping through ballots
@@ -214,9 +217,6 @@ public class ElectionIRV extends Election
                 //get the candidate with the least votes
                 CandidateIRV lowestCandidate = getLowestCandidate();
                 fileHandler.auditLog(lowestCandidate.getName() + " has the least votes. Their votes will now be unassigned.");
-
-                //mark that they have lost the election
-                lowestCandidate.lose();
 
                 //add them to the loser list
                 losers.add(lowestCandidate);
@@ -323,16 +323,19 @@ public class ElectionIRV extends Election
     {
         fileHandler.reportLog("\nCandidate:\tVotes:\tWinner/Loser:");
 
+        for (Candidate candidate : winners)
+        {
+            fileHandler.reportLog(candidate.getName() + "\t" + candidate.getNumVotes() + "\tWinner");
+        }
+
         for (Candidate candidate : candidates)
         {
-            if (((CandidateIRV) candidate).hasWon())
-            {
-                fileHandler.reportLog(candidate.getName() + "\t" + candidate.getNumVotes() + "\tWinner");
-            }
-            else
-            {
-                fileHandler.reportLog(candidate.getName() + "\t" + candidate.getNumVotes() + "\tLoser");
-            }
+            fileHandler.reportLog(candidate.getName() + "\t" + candidate.getNumVotes() + "\tLoser");
+        }
+
+        for (Candidate candidate : losers)
+        {
+            fileHandler.reportLog(candidate.getName() + "\t" + candidate.getNumVotes() + "\tLoser");
         }
     }
 }

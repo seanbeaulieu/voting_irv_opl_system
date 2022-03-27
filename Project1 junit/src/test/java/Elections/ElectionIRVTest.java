@@ -10,7 +10,6 @@ class ElectionIRVTest
     @Test
     void calcResults()
     {
-
     }
 
     @Test

@@ -1,26 +1,28 @@
 package Candidates;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CandidateTest
 {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getName()
     {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getNumVotes()
     {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setNumVotes()
     {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void compareTo()
     {
     }
