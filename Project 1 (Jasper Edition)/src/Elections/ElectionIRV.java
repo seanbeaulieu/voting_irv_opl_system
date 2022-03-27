@@ -133,20 +133,9 @@ public class ElectionIRV extends Election
     }
 
     /**
-     * Reads through all the ballots and assigns the ballots to their first choice candidate
-     */
-
-    // Note - might not need to loop, and can instead read line by line. However, it can also be
-    // helpful to do it all in one pass, check for a majority, and then go reassigning ballots
-    // Could/Should change to single line reading and loop in calcResults in order to track order
-
-    // Does this need to work where all the ballots are just read into unassigned ballots?
-
-    // Note2: The way that this function is setup parses the ballot for the index of 1
-    //        and assigns the ballot to the candidate. However, this might need to be 
-    //        changed in order to accomodate the initialization of currCandidate in BallotIRV
-    //        and the workings of nextCandidate()
-    public boolean readBallots()
+     * Reads through all the ballots and creates a ballot from each ballot line in the input file
+     * @return true if successful, false if there is an error
+     */public boolean readBallots()
     {
         // read each line
         for (int i = 0; i < numBallots; i++)

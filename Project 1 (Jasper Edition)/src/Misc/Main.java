@@ -103,6 +103,9 @@ public class Main
 
         //close the scanner
         scanner.close();
+
+        //close the fileHandler
+        fileHandler.close();
     }
 
     /**

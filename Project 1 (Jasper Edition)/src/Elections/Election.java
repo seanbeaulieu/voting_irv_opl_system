@@ -65,15 +65,6 @@ public class Election
         return false;
     }
 
-    /**
-     * Gets the results of the election
-     * TODO: finish comment to reflect return value?
-     */
-    public void getResults()
-    {
-
-    }
-
     public boolean inputFileExists()
     {
         return fileHandler.inputFileExists();

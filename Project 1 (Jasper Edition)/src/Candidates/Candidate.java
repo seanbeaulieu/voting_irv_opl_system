@@ -56,7 +56,7 @@ public class Candidate implements Comparable<Candidate>
 
     /**
      * compares two candidates by their number of votes
-     *
+     * (used for sorting arraylists of candidates)
      * @param candidate the candidate being compared with this one
      * @return -1 if the provided candidate has a larger voteCount, 1 if smaller, 0 otherwise
      */
