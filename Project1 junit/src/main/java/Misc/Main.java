@@ -121,7 +121,7 @@ public class Main
      *
      * @param filename the file to be set as the input file for election data
      */
-    public static void setFileName(String filename)
+    private static void setFileName(String filename)
     {
         //save the inputfile
         Main.filename = filename;
@@ -146,7 +146,7 @@ public class Main
     /**
      * runs an OPL election from the supplied input file
      */
-    public static void runOPL()
+    private static void runOPL()
     {
         //creates and runs an election
         election = new ElectionOPL(fileHandler, shuffle);
@@ -156,7 +156,7 @@ public class Main
     /**
      * runs an IRV election from the supplied input file
      */
-    public static void runIRV()
+    private static void runIRV()
     {
         //creates and runs an election
         election = new ElectionIRV(fileHandler, shuffle);
@@ -166,7 +166,7 @@ public class Main
     /**
      * runs whatever election exists.
      */
-    public static void runElection()
+    private static void runElection()
     {
         boolean success = election.calcResults();
 
@@ -196,7 +196,7 @@ public class Main
     /**
      * generates a report from the results of the election
      */
-    public static void generateReport()
+    private static void generateReport()
     {
         election.generateReport();
     }
@@ -204,7 +204,7 @@ public class Main
     /**
      * Displays the winners to the screen.
      */
-    public static void displayWinners()
+    private static void displayWinners()
     {
         //gets the winners of the election
         ArrayList<Candidate> winners = election.getWinners();
