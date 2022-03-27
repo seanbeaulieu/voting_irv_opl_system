@@ -10,21 +10,7 @@ class ElectionIRVTest
     @Test
     void calcResults()
     {
-    }
 
-    @Test
-    void getCandidatesFromIRVLine()
-    {
-    }
-
-    @Test
-    void readBallots()
-    {
-    }
-
-    @Test
-    void calculateWinner()
-    {
     }
 
     @Test

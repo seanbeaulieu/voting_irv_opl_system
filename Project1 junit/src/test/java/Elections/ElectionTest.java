@@ -13,21 +13,6 @@ class ElectionTest
     }
 
     @Test
-    void inputFileExists()
-    {
-    }
-
-    @Test
-    void nextLine()
-    {
-    }
-
-    @Test
-    void nextInt()
-    {
-    }
-
-    @Test
     void getWinners()
     {
     }
