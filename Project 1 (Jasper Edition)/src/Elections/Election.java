@@ -5,6 +5,10 @@ import Misc.FileHandler;
 
 import java.util.ArrayList;
 
+/**
+ * Represents an election with no specified type.
+ * Written by Jasper Rutherford
+ */
 public class Election
 {
     /**
@@ -37,10 +41,15 @@ public class Election
      */
     protected ArrayList<Candidate> winners;
 
+    /**
+     * Whether or not to shuffle the ballots
+     */
     protected boolean shuffle;
 
     /**
      * Creates an election with the given inputs
+     * @param fileHandler how this election will get inputs from files/send outputs to files
+     * @param shuffle whether or not this election should shuffle its ballots (only used if the election is IRV based)
      */
     public Election(FileHandler fileHandler, boolean shuffle)
     {
@@ -73,16 +82,28 @@ public class Election
         return fileHandler.inputFileExists();
     }
 
+    /**
+     * gets the next line of information from the input file
+     * @return the next line of information from the input file
+     */
     public String nextLine()
     {
         return fileHandler.nextLine();
     }
 
+    /**
+     * gets the first integer on the next line in the input file. the rest of that line is then ignored.
+     * @return the first integer found on the next line in the input file
+     */
     public int nextInt()
     {
         return fileHandler.nextInt();
     }
 
+    /**
+     * gets the list of winners of this election
+     * @return an ArrayList of Candidates which represent which candidates have won this election
+     */
     public ArrayList<Candidate> getWinners()
     {
         return winners;

@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
+/**
+ * Represents an IRV based Election
+ * Written by Sean Beaulieu and Jasper Rutherford
+ */
 public class ElectionIRV extends Election
 {
     /**
@@ -23,6 +27,8 @@ public class ElectionIRV extends Election
 
     /**
      * Creates an ElectionIRV with the provided fileHandler
+     * @param fileHandler how the election will get inputs/log to output files
+     * @param shuffle whether or not the election should shuffle the ballots
      */
     public ElectionIRV(FileHandler fileHandler, boolean shuffle)
     {
@@ -84,20 +90,6 @@ public class ElectionIRV extends Election
 
                 //calculate who won the election
                 calculateWinner();
-
-                // While there are still unassigned ballots
-                // Does this need to be numBallots? Could also be while checkForWinner still returns false.
-                // It's possible that this code could be simplified down to less than 30 lines.
-                // The main challenge is all of the edge cases that will take up lots of space
-                // Tie breakers, coin flip, the order of ballots
-
-//                while (checkForWinner() == false)
-//                {
-//
-//                    // possible reassignment of ballots here?
-//                    // there could be a function that takes the ballots from the candidate who just lost, and then reassigns them
-//
-//                }
 
                 //successful election!
                 return true;
@@ -168,79 +160,6 @@ public class ElectionIRV extends Election
         // return success
         return true;
     }
-
-    /**
-     * this function checks all of the candidates for a candidate that has the majority (>50%) amount of first choice ballots
-     */
-//    public boolean checkForWinner()
-//    {
-//
-//        // Loop through all candidates and tally the amount of first choice ballots they have
-//
-//        int indexOfWinner;
-//        int numBallotsOfTemp;
-//        int indexOfLoser;
-//        int numBallotsOfLoser;
-//
-//        // WILL NEED TO POSSIBLY ADJUST NUMCANDIDATES BASED ON ANY BALLOTS THAT AREN'T ASSIGNED
-//        for (int i = 0; i < numCandidates; i++)
-//        {
-//
-//            // create candidate
-//            CandidateIRV candidate = (CandidateIRV) candidates.get(i);
-//
-//            // check to see if the candidate hasn't already lost the election
-//
-//            if (candidate.hasLost() == false)
-//            {
-//
-//                // check amount of ballots
-//                int numBallotsCandHas = candidate.getBallots().size();
-//
-//                // Compare the ballots. This is where we would need to handle tie edgecases. Lot of code to write here.
-//                if (numBallotsCandHas > numBallotsOfTemp)
-//                {
-//                    indexOfWinner = i;
-//                    numBallotsOfTemp = numBallotsCandHas;
-//                }
-//
-//                if (numBallotsOfLoser < numBallotsCandHas)
-//                {
-//                    indexOfLoser = i;
-//                    numBallotsOfLoser = numBallotsCandHas;
-//                }
-//
-//                // Check that the numberBallots is the majority relative to the whole number
-//                // This means that the winner is declared, and that after the loop the won bool is set to true
-//                if ((double) (numBallots / numBallotsOfTemp) > .50)
-//                {
-//                    break;
-//                }
-//
-//                // No majority. Not sure how to connect the bottom two else statments
-//
-//                else
-//                {
-//                    CandidateIRV loser_candidate = (CandidateIRV) candidates.get(indexOfLoser);
-//                    loser_candidate.lose();
-//                    return false;
-//                }
-//
-//                // IN THE EVENT OF A TIE
-//                // Code would return false, meaning no winner
-//                else if (i == (numCandidates - 1))
-//            {
-//                return false;
-//            }
-//            }
-//        }
-//
-//        // Set the candidate with the most first place votes as the winner
-//        CandidateIRV winner_candidate = (CandidateIRV) candidates.get(indexOfWinner);
-//        winner_candidate.win();
-//        return true;
-//    }
-
 
     /**
      * calculates the winner of this election according to IRV

@@ -6,6 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Used to get election information from a given input file, and to output information to audit/report files
+ * Written by Jasper Rutherford
+ */
 public class FileHandler
 {
     /**

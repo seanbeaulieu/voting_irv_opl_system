@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+/**
+ * Represents an OPL based Election
+ * Written by Jasper Rutherford
+ */
 public class ElectionOPL extends Election
 {
     /**
@@ -15,6 +19,11 @@ public class ElectionOPL extends Election
      */
     private HashMap<String, Integer> parties;
 
+    /**
+     * Creates an OPL based election
+     * @param fileHandler the fileHandler to be used for inputs/outputs
+     * @param shuffle true if ballot order should be shuffled, false otherwise
+     */
     public ElectionOPL(FileHandler fileHandler, boolean shuffle)
     {
         super(fileHandler, shuffle);

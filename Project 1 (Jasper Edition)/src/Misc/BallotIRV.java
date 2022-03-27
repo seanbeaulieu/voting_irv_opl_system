@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
+/**
+ * Represents a ballot in an IRV based election
+ * Written by Jasper Rutherford
+ */
 public class BallotIRV
 {
     /**
@@ -19,6 +23,8 @@ public class BallotIRV
      * Creates a BallotIRV object
      *
      * @param choice_arr populates the ballot with the orders in which the candidates are ranked
+     * @param candidates the list of candidates in the order they were given in the input file
+     * @param id this ballot's id (the nth ballot in the input file has an id of n)
      */
     public BallotIRV(String[] choice_arr, ArrayList<Candidate> candidates, int id)
     {

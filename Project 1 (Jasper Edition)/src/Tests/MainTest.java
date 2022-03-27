@@ -11,9 +11,34 @@ public class MainTest
     {
         setFileName();
         runOPL();
-        runIRV;
+        runIRV();
         runElection();
         generateReport();
         displayWinners();
+    }
+
+    private void setFileName()
+    {
+
+    }
+
+    private void runOPL()
+    {
+    }
+
+    private void runIRV()
+    {
+    }
+
+    private void runElection()
+    {
+    }
+
+    private void generateReport()
+    {
+    }
+
+    private void displayWinners()
+    {
     }
 }

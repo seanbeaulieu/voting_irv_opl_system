@@ -8,6 +8,10 @@ import Elections.ElectionOPL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Used to take input commands from the user.
+ * Written by Jasper Rutherford
+ */
 public class Main
 {
     //whether or not IRV will be ran with shuffle
@@ -32,6 +36,10 @@ public class Main
     private static boolean generatereportAvailable = false;
     private static boolean displaywinnersAvailable = false;
 
+    /**
+     * Used to start the program
+     * @param args anything sent in from the user (all ignored)
+     */
     public static void main(String[] args)
     {
         //used for command line input

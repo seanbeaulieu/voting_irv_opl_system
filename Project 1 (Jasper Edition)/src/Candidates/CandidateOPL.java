@@ -1,18 +1,20 @@
 package Candidates;
 
-import Candidates.Candidate;
-
+/**
+ * Represents one Candidate in an OPL based Election
+ * Written by Jasper Rutherford
+ */
 public class CandidateOPL extends Candidate
 {
     /**
-     * This Candidates.CandidateOPL's party
+     * This CandidateOPL's party
      */
     private String party;
 
     /**
-     * Constructs a Candidates.CandidateOPL
-     * @param name the name of the Candidates.CandidateOPL
-     * @param party the party that the Candidates.CandidateOPL is affiliated with
+     * Constructs a CandidateOPL
+     * @param name the name of the CandidateOPL
+     * @param party the party that the CandidateOPL is affiliated with
      */
     public CandidateOPL(String name, String party)
     {
@@ -21,8 +23,8 @@ public class CandidateOPL extends Candidate
     }
 
     /**
-     * Gets this Candidates.CandidateOPL's party
-     * @return a String representing this Candidates.CandidateOPL's party
+     * Gets this CandidateOPL's party
+     * @return a String representing this CandidateOPL's party
      */
     public String getParty()
     {

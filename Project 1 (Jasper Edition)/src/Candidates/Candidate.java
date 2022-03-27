@@ -1,7 +1,8 @@
 package Candidates;
 
 /**
- * Represents one Candidates.Candidate
+ * Represents one Candidate in an Election.
+ * Written by Jasper Rutherford
  */
 public class Candidate implements Comparable<Candidate>
 {
@@ -17,7 +18,7 @@ public class Candidate implements Comparable<Candidate>
 
     /**
      * Creates a Candidate with the provided name
-     * @param name the name of this Candidates.Candidate
+     * @param name the name of this Candidate
      */
     public Candidate(String name)
     {

@@ -4,6 +4,10 @@ import Misc.BallotIRV;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a Candidate in an IRV based Election
+ * Written by Jasper Rutherford
+ */
 public class CandidateIRV extends Candidate
 {
     /**
