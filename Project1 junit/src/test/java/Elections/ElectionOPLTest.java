@@ -13,10 +13,6 @@ class ElectionOPLTest
     }
 
     @Test
-    void getWinners() {
-    }
-
-    @Test
     void generateReport()
     {
     }

@@ -8,32 +8,12 @@ class CandidateIRVTest
 {
 
     @Test
-    void hasWon()
-    {
-    }
-
-    @Test
-    void hasLost()
-    {
-    }
-
-    @Test
     void getBallots()
     {
     }
 
     @Test
     void addBallot()
-    {
-    }
-
-    @Test
-    void win()
-    {
-    }
-
-    @Test
-    void lose()
     {
     }
 

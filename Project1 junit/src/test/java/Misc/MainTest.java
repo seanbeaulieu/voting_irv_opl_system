@@ -11,34 +11,4 @@ class MainTest
     void main()
     {
     }
-
-    @Test
-    void setFileName()
-    {
-    }
-
-    @Test
-    void runOPL()
-    {
-    }
-
-    @Test
-    void runIRV()
-    {
-    }
-
-    @Test
-    void runElection()
-    {
-    }
-
-    @Test
-    void generateReport()
-    {
-    }
-
-    @Test
-    void displayWinners()
-    {
-    }
 }
