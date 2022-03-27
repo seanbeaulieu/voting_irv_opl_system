@@ -10,6 +10,7 @@ class ElectionOPLTest
     @Test
     void calcResults()
     {
+        assertEquals()
     }
 
     @Test
