@@ -12,9 +12,6 @@ public class ElectionTest
     @RepeatedTest(3)
     public void runTests(){
     calcResults();
-    inputFileExists();
-    nextLine();
-    nextInt();
     getWinners();
     generateReport();
     }

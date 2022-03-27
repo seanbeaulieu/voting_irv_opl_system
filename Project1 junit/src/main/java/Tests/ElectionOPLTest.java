@@ -4,13 +4,12 @@ public class ElectionOPLTest
 {
     public ElectionOPLTest();
 }
+
 public void runTests(){
-    calcResults()
-    getCandidatesFromLine();
-    readBallots();
-    fillDroopSeats();
-    getCandidatesByParty();
-    fillExcessSeats();
-    getSortedPartyNames();
+    @Test
+    void calcResults(){
+        assertEquals()
+
+    }
     generateReport();
 }
