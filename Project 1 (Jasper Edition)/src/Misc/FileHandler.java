@@ -106,29 +106,24 @@ public class FileHandler
 
     /**
      * reads in the next line of input and returns the first number found in that line
+     * This is expected to work as such:
+     *
+     *      if the file is:
+     *      "
+     *      4 5
+     *      6
+     *      7
+     *      8 9 1
+     *      2
+     *      "
+     *      and nextInt() is called 5 times, it should return 4, 6, 7, 8, 2
      *
      * @return an int representing the first number found on the next line
      */
     public int nextInt()
     {
         int out = input.nextInt();
-
-        //TODO: check if this works right
-
-        /*
-        I expect this to work as such:
-
-        if the file is:
-        "
-        45
-        6
-        7
-        891
-        2
-        "
-
-        and nextInt() is called 5 times, it should return 4, 6, 7, 8, 9, 1
-         */
+        String dump = input.nextLine();
 
         return out;
     }

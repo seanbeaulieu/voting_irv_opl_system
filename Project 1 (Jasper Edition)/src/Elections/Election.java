@@ -40,7 +40,7 @@ public class Election
     protected boolean shuffle;
 
     /**
-     * Creates an election with the given inputs (TODO)
+     * Creates an election with the given inputs
      */
     public Election(FileHandler fileHandler, boolean shuffle)
     {

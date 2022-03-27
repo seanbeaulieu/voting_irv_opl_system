@@ -32,7 +32,6 @@ public class ElectionOPL extends Election
             String electionType = nextLine();
             if (electionType.equals("OPL"))
             {
-                //TODO: theoretically the file could fail when reading these ints? I think we can assume that the file is written properly but if not then we should get on that
                 numCandidates = nextInt();
                 numSeats = nextInt();
                 numBallots = nextInt();
@@ -165,7 +164,7 @@ public class ElectionOPL extends Election
     public int fillDroopSeats()
     {
         int allocatedSeats = 0;
-        int droop = (int) Math.floor(numBallots * 1.0 / (numSeats + 1));        //TODO: this might need an extra +1 on the end?
+        int droop = (int) Math.floor(numBallots * 1.0 / (numSeats + 1)) + 1;
 
         //loop through each party
         for (String partyName : parties.keySet())

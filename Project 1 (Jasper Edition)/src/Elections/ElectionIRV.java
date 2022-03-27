@@ -7,7 +7,6 @@ import Misc.FileHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 import java.util.Stack;
 
 public class ElectionIRV extends Election
@@ -46,7 +45,6 @@ public class ElectionIRV extends Election
             //check first line
             if (electionType.equals("IRV"))
             {
-                //TODO: theoretically the file could fail when reading these ints? I think we can assume that the file is written properly but if not then we should get on that
                 numCandidates = nextInt();
                 numBallots = nextInt();
                 String rawCandidates = nextLine();
@@ -85,7 +83,7 @@ public class ElectionIRV extends Election
                 }
 
                 //calculate who won the election
-                tempnameforfunction();
+                calculateWinner();
 
                 // While there are still unassigned ballots
                 // Does this need to be numBallots? Could also be while checkForWinner still returns false.
@@ -117,7 +115,11 @@ public class ElectionIRV extends Election
         }
     }
 
-    //TODO: put a comment here idk
+    /**
+     * Parses candidates from the supplied line
+     * @param line a string representation of candidates
+     * @return true if this succeeded, false otherwise
+     */
     public boolean getCandidatesFromIRVLine(String line)
     {
 
@@ -241,14 +243,13 @@ public class ElectionIRV extends Election
 
 
     /**
-     * TODO: name this function lmao
-     * this matches the pseudocode almost exactly
-     * temp comment for function
+     * calculates the winner of this election according to IRV
      */
-    public void tempnameforfunction()
+    public void calculateWinner()
     {
         Candidate winner = null;
-        int voteGoal = numBallots / 2 + 1; //TODO: is this calculated correctly?
+        int voteGoal = numBallots / 2 + 1;
+
         //move ballots around until a victor is found
         while (winner == null)
         {
@@ -320,7 +321,6 @@ public class ElectionIRV extends Election
 
     /**
      * finds the CandidateIRV in this ElectionIRV's 'candidates' list who has the least number of votes
-     * TODO: this needs to use coin flip for ties
      *
      * @return the next CandidateIRV who has the least votes
      */
