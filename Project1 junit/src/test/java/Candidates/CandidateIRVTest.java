@@ -6,8 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CandidateIRVTest
 {
-    setFileName("IRVTest.txt");
-    runIRV();
+    Candidate testCandidate = new Candidate("Shey(D)");
 
     @Test
     void hasWon()

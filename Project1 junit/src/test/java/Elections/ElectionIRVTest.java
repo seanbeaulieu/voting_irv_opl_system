@@ -6,10 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ElectionIRVTest
 {
+    Election IRVstandard = new Election("../IRVTest.txt");
 
     @Test
     void calcResults()
     {
+
     }
 
     @Test
