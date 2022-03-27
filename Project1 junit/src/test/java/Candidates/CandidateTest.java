@@ -48,6 +48,6 @@ class CandidateTest
     @Test
     void compareTo()
     {
-        assertEquals(-1, testCandidate.compareTo(secondCandidate)); 
+        assertEquals(-1, testCandidate.compareTo(secondCandidate));
     }
 }
