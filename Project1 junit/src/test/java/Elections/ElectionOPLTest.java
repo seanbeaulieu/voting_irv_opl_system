@@ -13,33 +13,7 @@ class ElectionOPLTest
     }
 
     @Test
-    void getCandidatesFromLine()
-    {
-    }
-
-    @Test
-    void readBallots()
-    {
-    }
-
-    @Test
-    void fillDroopSeats()
-    {
-    }
-
-    @Test
-    void getCandidatesByParty()
-    {
-    }
-
-    @Test
-    void fillExcessSeats()
-    {
-    }
-
-    @Test
-    void getSortedPartyNames()
-    {
+    void getWinners() {
     }
 
     @Test
