@@ -31,6 +31,11 @@ class CandidateTest
     @Test
     void setNumVotes()
     {
+        setNumVotes testClass = new setVotes();
+
+        testClass.setNumVotes("6");
+        assertEquals("6", )
+
     }
 
     @Test
