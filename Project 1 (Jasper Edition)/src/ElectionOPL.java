@@ -34,13 +34,13 @@ public class ElectionOPL extends Election
                 if (!getCandidatesFromLine(rawCandidates))
                 {
                     //error out
-                    //TODO
+                    return false;
                 }
 
                 if (!readBallots())
                 {
                     //error out
-                    //(TODO)
+                    return false;
                 }
 
                 countVotesFirstPass();
