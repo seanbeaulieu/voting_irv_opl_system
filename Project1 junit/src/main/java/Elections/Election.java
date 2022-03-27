@@ -74,33 +74,6 @@ public class Election
     }
 
     /**
-     * gets whether or not the input file exists
-     * @return true if the input file exists, false otherwise
-     */
-    public boolean inputFileExists()
-    {
-        return fileHandler.inputFileExists();
-    }
-
-    /**
-     * gets the next line of information from the input file
-     * @return the next line of information from the input file
-     */
-    public String nextLine()
-    {
-        return fileHandler.nextLine();
-    }
-
-    /**
-     * gets the first integer on the next line in the input file. the rest of that line is then ignored.
-     * @return the first integer found on the next line in the input file
-     */
-    public int nextInt()
-    {
-        return fileHandler.nextInt();
-    }
-
-    /**
      * gets the list of winners of this election
      * @return an ArrayList of Candidates which represent which candidates have won this election
      */

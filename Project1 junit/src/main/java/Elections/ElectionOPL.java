@@ -21,8 +21,9 @@ public class ElectionOPL extends Election
 
     /**
      * Creates an OPL based election
+     *
      * @param fileHandler the fileHandler to be used for inputs/outputs
-     * @param shuffle true if ballot order should be shuffled, false otherwise
+     * @param shuffle     true if ballot order should be shuffled, false otherwise
      */
     public ElectionOPL(FileHandler fileHandler, boolean shuffle)
     {
@@ -36,16 +37,16 @@ public class ElectionOPL extends Election
     @Override
     public boolean calcResults()
     {
-        if (inputFileExists())
+        if (fileHandler.inputFileExists())
         {
-            String electionType = nextLine();
+            String electionType = fileHandler.nextLine();
             if (electionType.equals("OPL"))
             {
-                numCandidates = nextInt();
-                numSeats = nextInt();
-                numBallots = nextInt();
+                numCandidates = fileHandler.nextInt();
+                numSeats = fileHandler.nextInt();
+                numBallots = fileHandler.nextInt();
 
-                String rawCandidates = nextLine();
+                String rawCandidates = fileHandler.nextLine();
 
                 if (!getCandidatesFromLine(rawCandidates))
                 {
@@ -89,7 +90,7 @@ public class ElectionOPL extends Election
      * @param line the line to parse into candidates and parties
      * @return Whether this was successful or not
      */
-    public boolean getCandidatesFromLine(String line)
+    private boolean getCandidatesFromLine(String line)
     {
         //Used to shrink down the provided string into smaller chunks
         String shortened = line;
@@ -139,12 +140,12 @@ public class ElectionOPL extends Election
      *
      * @return true if successful and false otherwise
      */
-    public boolean readBallots()
+    private boolean readBallots()
     {
         //loop once for each ballot
         for (int lcv = 0; lcv < numBallots; lcv++)
         {
-            String rawBallot = nextLine();
+            String rawBallot = fileHandler.nextLine();
             int index = rawBallot.indexOf(1);
 
             if (index == -1)
@@ -170,7 +171,7 @@ public class ElectionOPL extends Election
      *
      * @return The number of seats which were allocated via droop
      */
-    public int fillDroopSeats()
+    private int fillDroopSeats()
     {
         int allocatedSeats = 0;
         int droop = (int) Math.floor(numBallots * 1.0 / (numSeats + 1)) + 1;
@@ -226,7 +227,7 @@ public class ElectionOPL extends Election
      * @param partyName the party whose candidates will be listed
      * @return an ArrayList of Candidates who belong to the requested party
      */
-    public ArrayList<Candidate> getCandidatesByParty(String partyName)
+    private ArrayList<Candidate> getCandidatesByParty(String partyName)
     {
         //get a list of all candidates in this party
         ArrayList<Candidate> partyCandidates = new ArrayList<>();
@@ -246,7 +247,7 @@ public class ElectionOPL extends Election
      *
      * @param excessSeats the number of seats left to fill
      */
-    public void fillExcessSeats(int excessSeats)
+    private void fillExcessSeats(int excessSeats)
     {
         ArrayList<String> sortedPartyNames = getSortedPartyNames();
         int remainingSeats = excessSeats;
@@ -285,6 +286,12 @@ public class ElectionOPL extends Election
                     remainingSeats--;
                 }
             }
+
+            //if all candidates have seats and there are still seats to fill, then ignore the extra seats.
+            if (candidates.size() < 1)
+            {
+                remainingSeats = 0;
+            }
         }
     }
 
@@ -293,7 +300,7 @@ public class ElectionOPL extends Election
      *
      * @return an ArrayList of party names
      */
-    public ArrayList<String> getSortedPartyNames()
+    private ArrayList<String> getSortedPartyNames()
     {
         ArrayList<String> sortedPartyNames = new ArrayList<>();
 
@@ -339,8 +346,8 @@ public class ElectionOPL extends Election
         //count how many seats each party has won
         for (Candidate winner : winners)
         {
-           String partyName = ((CandidateOPL) winner).getParty();
-           partySeatsWon.put(partyName, partySeatsWon.get(partyName) + 1);
+            String partyName = ((CandidateOPL) winner).getParty();
+            partySeatsWon.put(partyName, partySeatsWon.get(partyName) + 1);
         }
 
         //log everything to the report file

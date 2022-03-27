@@ -11,7 +11,7 @@ import java.util.Stack;
 
 /**
  * Represents an IRV based Election
- * Written by Sean Beaulieu and Jasper Rutherford
+ * Written by Sean Beaulieu, Ann Huynher, and Jasper Rutherford
  */
 public class ElectionIRV extends Election
 {
@@ -44,16 +44,16 @@ public class ElectionIRV extends Election
     @Override
     public boolean calcResults()
     {
-        if (inputFileExists())
+        if (fileHandler.inputFileExists())
         {
-            String electionType = nextLine();
+            String electionType = fileHandler.nextLine();
 
             //check first line
             if (electionType.equals("IRV"))
             {
-                numCandidates = nextInt();
-                numBallots = nextInt();
-                String rawCandidates = nextLine();
+                numCandidates = fileHandler.nextInt();
+                numBallots = fileHandler.nextInt();
+                String rawCandidates = fileHandler.nextLine();
 
                 //read candidates
                 if (!getCandidatesFromIRVLine(rawCandidates))
@@ -112,9 +112,8 @@ public class ElectionIRV extends Election
      * @param line a string representation of candidates
      * @return true if this succeeded, false otherwise
      */
-    public boolean getCandidatesFromIRVLine(String line)
+    private boolean getCandidatesFromIRVLine(String line)
     {
-
         // split the raw input line into an array of candidates names
         String[] candidates_arr = line.split(",");
 
@@ -132,13 +131,13 @@ public class ElectionIRV extends Election
      *
      * @return true if successful, false if there is an error
      */
-    public boolean readBallots()
+    private boolean readBallots()
     {
         // read each line
         for (int i = 0; i < numBallots; i++)
         {
             // Read in a ballot, and populate an array with the choices.
-            String rawBallot = nextLine();
+            String rawBallot = fileHandler.nextLine();
 
             fileHandler.auditLog("Read Ballot #" + i + " (" + rawBallot + ")");
 
@@ -164,7 +163,7 @@ public class ElectionIRV extends Election
     /**
      * calculates the winner of this election according to IRV
      */
-    public void calculateWinner()
+    private void calculateWinner()
     {
         Candidate winner = null;
         int voteGoal = numBallots / 2 + 1;
