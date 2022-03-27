@@ -148,7 +148,7 @@ public class ElectionIRV extends Election
                 String[] choice_arr = rawBallot.split(",");
 
                 // Create a new ballot object. Notes on population in BallotIRV
-                BallotIRV ballot = new BallotIRV(choice_arr, candidates, i);
+                unassignedBallots.add(new BallotIRV(choice_arr, candidates, i));
             }
 
             else
@@ -216,23 +216,34 @@ public class ElectionIRV extends Election
 
                 //get the candidate with the least votes
                 CandidateIRV lowestCandidate = getLowestCandidate();
-                fileHandler.auditLog(lowestCandidate.getName() + " has the least votes. Their votes will now be unassigned.");
 
-                //add them to the loser list
-                losers.add(lowestCandidate);
-
-                //take them off the standard candidate list
-                candidates.remove(lowestCandidate);
-
-                //unassign their ballots
-                for (BallotIRV ballot : lowestCandidate.getBallots())
+                //if there are no more candidates
+                if (lowestCandidate == null)
                 {
-                    unassignedBallots.add(ballot);
-                    fileHandler.auditLog("Ballot #" + ballot.getId() + " has been unassigned.");
+                    //the winner is the loser who lost most recently
+                    winner = losers.peek();
+                    winners.add(winner);
                 }
+                else
+                {
+                    fileHandler.auditLog(lowestCandidate.getName() + " has the least votes. Their votes will now be unassigned.");
 
-                //clear the candidate's ballots
-                lowestCandidate.getBallots().clear();
+                    //add them to the loser list
+                    losers.add(lowestCandidate);
+
+                    //take them off the standard candidate list
+                    candidates.remove(lowestCandidate);
+
+                    //unassign their ballots
+                    for (BallotIRV ballot : lowestCandidate.getBallots())
+                    {
+                        unassignedBallots.add(ballot);
+                        fileHandler.auditLog("Ballot #" + ballot.getId() + " has been unassigned.");
+                    }
+
+                    //clear the candidate's ballots
+                    lowestCandidate.getBallots().clear();
+                }
             }
         }
     }
@@ -240,31 +251,41 @@ public class ElectionIRV extends Election
     /**
      * finds the CandidateIRV in this ElectionIRV's 'candidates' list who has the least number of votes
      *
-     * @return the next CandidateIRV who has the least votes
+     * @return the next CandidateIRV who has the least votes (or null if there are no more candidates)
      */
     private CandidateIRV getLowestCandidate()
     {
+        //if there are no more candidates
+        if (candidates.size() == 0)
+        {
+            //return null
+            return null;
+        }
+
         ArrayList<Candidate> lowestCandidates = new ArrayList<>();
         lowestCandidates.add(candidates.get(0));
 
         //loop through all candidates
         for (Candidate candidate : candidates)
         {
-            //if this candidate has fewer votes than the candidates tied for the least votes
-            if (candidate.getNumVotes() < lowestCandidates.get(0).getNumVotes())
+            if (!lowestCandidates.contains(candidate))
             {
-                //clear the list of lowest candidates
-                lowestCandidates.clear();
+                //if this candidate has fewer votes than the candidates tied for the least votes
+                if (candidate.getNumVotes() < lowestCandidates.get(0).getNumVotes())
+                {
+                    //clear the list of lowest candidates
+                    lowestCandidates.clear();
 
-                //add this candidate to the list
-                lowestCandidates.add(candidate);
-            }
+                    //add this candidate to the list
+                    lowestCandidates.add(candidate);
+                }
 
-            //if this candidate is tied for the least number of votes
-            else if (candidate.getNumVotes() == lowestCandidates.get(0).getNumVotes())
-            {
-                //add it to the list
-                lowestCandidates.add(candidate);
+                //if this candidate is tied for the least number of votes
+                else if (candidate.getNumVotes() == lowestCandidates.get(0).getNumVotes())
+                {
+                    //add it to the list
+                    lowestCandidates.add(candidate);
+                }
             }
         }
 
