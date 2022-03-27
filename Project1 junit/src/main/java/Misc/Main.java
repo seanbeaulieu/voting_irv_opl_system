@@ -56,6 +56,7 @@ public class Main
             {
                 System.out.println("Awaiting File Name.");
                 String filename = scanner.nextLine();
+                System.out.println("'" + filename + "'");
 
                 setFileName(filename);
             }
@@ -212,7 +213,7 @@ public class Main
         //special case if there is only one winner
         if (winners.size() == 1)
         {
-            System.out.println(winners.get(0) + " won the election!");
+            System.out.println(winners.get(0).getName() + " won the election!");
         }
 
         //standard case for any other possible number of winners

@@ -1,10 +1,13 @@
 package Elections;
 
 import Candidates.Candidate;
+import Candidates.CandidateIRV;
 import Candidates.CandidateOPL;
+import Misc.BallotIRV;
 import Misc.FileHandler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -92,43 +95,23 @@ public class ElectionOPL extends Election
      */
     private boolean getCandidatesFromLine(String line)
     {
-        //Used to shrink down the provided string into smaller chunks
-        String shortened = line;
+        // split the raw input line into an array of candidates names
+        String[] candidates_arr = line.split(",");
 
-        //loops once for every candidate
-        for (int lcv = 0; lcv < numCandidates; lcv++)
+        // populate the candidates arrayList with candidates
+        for (int i = 0; i < candidates_arr.length; i += 2)
         {
-            int bracketPos = shortened.indexOf('[');
-            int commaPos = shortened.indexOf(',');
-
-            if (bracketPos == -1 || commaPos == -1)
-            {
-                //error out
-                return false;
-            }
-
             //gets a candidate's name
-            String candidateName = shortened.substring(bracketPos + 1, commaPos);
-
-            shortened = shortened.substring(commaPos + 1);
-            bracketPos = shortened.indexOf(']');
-
-            if (bracketPos == -1)
-            {
-                //error out
-                return false;
-            }
+            String candidateName = candidates_arr[i].substring(1);
 
             //gets a candidate's party
-            String partyName = shortened.substring(0, bracketPos);
+            String partyName = candidates_arr[i + 1].substring(0, candidates_arr[i + 1].length() - 1);
 
             //adds a candidate with the provided information to the list of candidates
             candidates.add(new CandidateOPL(candidateName, partyName));
 
             //set the party's number of votes to zero
             parties.put(partyName, 0);
-
-            shortened = shortened.substring(bracketPos + 2);
         }
 
         //return success
@@ -142,25 +125,40 @@ public class ElectionOPL extends Election
      */
     private boolean readBallots()
     {
-        //loop once for each ballot
-        for (int lcv = 0; lcv < numBallots; lcv++)
+        // read each line
+        for (int i = 0; i < numBallots; i++)
         {
+            // Read in a ballot, and populate an array with the choices.
             String rawBallot = fileHandler.nextLine();
-            int index = rawBallot.indexOf(1);
 
-            if (index == -1)
+            if (rawBallot != null)
             {
-                //error out
-                return false;
+                String[] choice_arr = rawBallot.split(",");
+
+                int index = Arrays.asList(choice_arr).indexOf("1");
+
+                if (index == -1)
+                {
+                    //error out
+                    System.out.println("Invalid ballot read!");
+                    return false;
+                }
+
+                CandidateOPL candidate = (CandidateOPL) candidates.get(index);
+                String party = candidate.getParty();
+
+                candidate.setNumVotes(candidate.getNumVotes() + 1);
+                parties.put(party, parties.get(party) + 1);
             }
 
-            CandidateOPL candidate = (CandidateOPL) candidates.get(index);
-            String party = candidate.getParty();
-
-            candidate.setNumVotes(candidate.getNumVotes() + 1);
-            parties.put(party, parties.get(party) + 1);
+            else
+            {
+                System.out.println("Reached the end of the file!");
+                return false;
+            }
         }
 
+        // return success
         return true;
     }
 

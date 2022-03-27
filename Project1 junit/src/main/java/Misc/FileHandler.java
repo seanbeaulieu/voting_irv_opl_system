@@ -173,7 +173,7 @@ public class FileHandler
         //write to audit file
         try
         {
-            audit.write(log);
+            audit.write(log + "\n");
         }
         catch (IOException e)
         {
@@ -190,7 +190,7 @@ public class FileHandler
         //write to report file
         try
         {
-            report.write(log);
+            report.write(log + "\n");
         }
         catch (IOException e)
         {
