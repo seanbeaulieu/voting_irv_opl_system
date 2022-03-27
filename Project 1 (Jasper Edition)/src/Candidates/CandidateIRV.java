@@ -1,3 +1,7 @@
+package Candidates;
+
+import Misc.BallotIRV;
+
 import java.util.ArrayList;
 
 public class CandidateIRV extends Candidate
@@ -55,5 +59,40 @@ public class CandidateIRV extends Candidate
     public ArrayList<BallotIRV> getBallots()
     {
         return ballots;
+    }
+
+    /**
+     * adds the provided ballot to this candidate's list of ballots
+     * @param ballot the ballotIRV to be added to this candidate's list of ballots
+     */
+    public void addBallot(BallotIRV ballot)
+    {
+        ballots.add(ballot);
+    }
+
+    /**
+     * marks that this candidate has won
+     */
+    public void win()
+    {
+        won = true;
+    }
+
+    /**
+     * marks that this candidate has lost
+     */
+    public void lose()
+    {
+        lost = true;
+    }
+
+    /**
+     * Gets this Candidate's number of votes
+     *
+     * @return an int representing this Candidate's number of votes
+     */
+    public int getNumVotes()
+    {
+        return ballots.size();
     }
 }
