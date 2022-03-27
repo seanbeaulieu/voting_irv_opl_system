@@ -22,15 +22,16 @@ class CandidateTest
     @Test
     void getNumVotes()
     {
-        getVotes testClass = new getVotes();
+        numVotes testClass = new numVotes();
 
         testClass.setmNumVotes("6");
-        assertEquals("6",testClass.getVotes());
+        assertEquals("6",testClass.numVotes());
     }
 
     @Test
     void setNumVotes()
     {
+
     }
 
     @Test
