@@ -1,3 +1,8 @@
+package Elections;
+
+import Candidates.Candidate;
+import Misc.FileHandler;
+
 import java.util.ArrayList;
 
 public class Election
@@ -5,7 +10,7 @@ public class Election
     /**
      * Used to handle file inputs/outputs
      */
-    private FileHandler fileHandler;
+    protected final FileHandler fileHandler;
 
     /**
      * The number of Candidates in this election
@@ -32,12 +37,16 @@ public class Election
      */
     protected ArrayList<Candidate> winners;
 
+    protected boolean shuffle;
+
     /**
      * Creates an election with the given inputs (TODO)
      */
-    public Election(FileHandler fileHandler)
+    public Election(FileHandler fileHandler, boolean shuffle)
     {
         this.fileHandler = fileHandler;
+        this.shuffle = shuffle;
+
         numCandidates = 0;
         numBallots = 0;
         numSeats = 0;
@@ -47,10 +56,13 @@ public class Election
 
     /**
      * Calculates the results of the election
+     * returns true if the election was ran successfully
+     * returns false if there was an error TODO: fix this comment to reflect return val
      */
-    public void calcResults()
+    public boolean calcResults()
     {
-
+        System.out.println("Somehow called Election's calcResults method. This should be impossible.");
+        return false;
     }
 
     /**
@@ -64,7 +76,7 @@ public class Election
 
     public boolean inputFileExists()
     {
-        return fileHandler.inputHandlerExists();
+        return fileHandler.inputFileExists();
     }
 
     public String nextLine()
@@ -75,5 +87,10 @@ public class Election
     public int nextInt()
     {
         return fileHandler.nextInt();
+    }
+
+    public ArrayList<Candidate> getWinners()
+    {
+        return winners;
     }
 }

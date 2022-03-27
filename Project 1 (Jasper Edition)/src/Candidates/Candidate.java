@@ -1,7 +1,9 @@
+package Candidates;
+
 /**
- * Represents one Candidate
+ * Represents one Candidates.Candidate
  */
-public class Candidate
+public class Candidate implements Comparable<Candidate>
 {
     /**
      * Tracks this candidate's name
@@ -15,7 +17,7 @@ public class Candidate
 
     /**
      * Creates a Candidate with the provided name
-     * @param name the name of this Candidate
+     * @param name the name of this Candidates.Candidate
      */
     public Candidate(String name)
     {
@@ -50,5 +52,17 @@ public class Candidate
     public void setNumVotes(int numVotes)
     {
         this.numVotes = numVotes;
+    }
+
+    /**
+     * compares two candidates by their number of votes
+     *
+     * @param candidate the candidate being compared with this one
+     * @return -1 if the provided candidate has a larger voteCount, 1 if smaller, 0 otherwise
+     */
+    @Override
+    public int compareTo(Candidate candidate)
+    {
+        return Integer.compare(getNumVotes(), candidate.getNumVotes());
     }
 }
