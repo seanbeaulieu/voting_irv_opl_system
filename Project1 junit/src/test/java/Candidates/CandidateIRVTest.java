@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CandidateIRVTest
 {
+    Candidate testCandidate = new Candidate("Shey(D)");
 
     @Test
-<<<<<<< HEAD
     void hasWon()
     {
 
@@ -20,8 +20,6 @@ class CandidateIRVTest
     }
 
     @Test
-=======
->>>>>>> be22827c4a678868b432bbbc4eb22423d3614818
     void getBallots()
     {
     }
