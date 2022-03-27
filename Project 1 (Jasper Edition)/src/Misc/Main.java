@@ -186,12 +186,11 @@ public class Main
     }
 
     /**
-     * generates a report.
-     * TODO: generate a report
+     * generates a report from the results of the election
      */
     private static void generateReport()
     {
-
+        election.generateReport();
     }
 
     /**

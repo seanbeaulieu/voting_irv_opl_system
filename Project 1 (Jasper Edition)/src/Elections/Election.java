@@ -56,8 +56,7 @@ public class Election
 
     /**
      * Calculates the results of the election
-     * returns true if the election was ran successfully
-     * returns false if there was an error TODO: fix this comment to reflect return val
+     * @return true if the election was ran successfully, false if there was an error
      */
     public boolean calcResults()
     {
@@ -65,6 +64,10 @@ public class Election
         return false;
     }
 
+    /**
+     * gets whether or not the input file exists
+     * @return true if the input file exists, false otherwise
+     */
     public boolean inputFileExists()
     {
         return fileHandler.inputFileExists();
@@ -83,5 +86,13 @@ public class Election
     public ArrayList<Candidate> getWinners()
     {
         return winners;
+    }
+
+    /**
+     * generates a report from the current state of the election
+     */
+    public void generateReport()
+    {
+        System.out.println("Tried to generate a report from an election with no type. This should be impossible.");
     }
 }

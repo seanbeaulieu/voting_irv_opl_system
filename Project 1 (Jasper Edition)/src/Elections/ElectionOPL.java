@@ -313,4 +313,48 @@ public class ElectionOPL extends Election
 
         return sortedPartyNames;
     }
+
+    /**
+     * generates a report from the current state of the election
+     */
+    public void generateReport()
+    {
+        //calculate how many seats each party has won
+        HashMap<String, Integer> partySeatsWon = new HashMap<>();
+
+        //initialize each party to zero seats
+        for (String partyName : parties.keySet())
+        {
+            partySeatsWon.put(partyName, 0);
+        }
+
+        //count how many seats each party has won
+        for (Candidate winner : winners)
+        {
+           String partyName = ((CandidateOPL) winner).getParty();
+           partySeatsWon.put(partyName, partySeatsWon.get(partyName) + 1);
+        }
+
+        //log everything to the report file
+        fileHandler.reportLog("Party:\tVotes:\tSeats Won:");
+
+        //report party info
+        for (String partyName : parties.keySet())
+        {
+            fileHandler.reportLog(partyName + "\t" + parties.get(partyName) + "\t" + partySeatsWon.get(partyName));
+        }
+
+        //report individual candidate info
+        fileHandler.reportLog("\nCandidate:\tVotes:\tWinner/Loser:");
+
+        for (Candidate candidate : winners)
+        {
+            fileHandler.reportLog(candidate.getName() + "\t" + candidate.getNumVotes() + "\tWinner");
+        }
+
+        for (Candidate candidate : candidates)
+        {
+            fileHandler.reportLog(candidate.getName() + "\t" + candidate.getNumVotes() + "\tLoser");
+        }
+    }
 }

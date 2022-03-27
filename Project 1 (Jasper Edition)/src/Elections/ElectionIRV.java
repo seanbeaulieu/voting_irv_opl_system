@@ -7,6 +7,7 @@ import Misc.FileHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Stack;
 
 public class ElectionIRV extends Election
@@ -134,8 +135,10 @@ public class ElectionIRV extends Election
 
     /**
      * Reads through all the ballots and creates a ballot from each ballot line in the input file
+     *
      * @return true if successful, false if there is an error
-     */public boolean readBallots()
+     */
+    public boolean readBallots()
     {
         // read each line
         for (int i = 0; i < numBallots; i++)
@@ -323,8 +326,96 @@ public class ElectionIRV extends Election
      */
     private CandidateIRV getLowestCandidate()
     {
-        Collections.sort(candidates);
-        return (CandidateIRV) candidates.get(0);
+        ArrayList<Candidate> lowestCandidates = new ArrayList<>();
+        lowestCandidates.add(candidates.get(0));
+
+        //loop through all candidates
+        for (Candidate candidate : candidates)
+        {
+            //if this candidate has fewer votes than the candidates tied for the least votes
+            if (candidate.getNumVotes() < lowestCandidates.get(0).getNumVotes())
+            {
+                //clear the list of lowest candidates
+                lowestCandidates.clear();
+
+                //add this candidate to the list
+                lowestCandidates.add(candidate);
+            }
+
+            //if this candidate is tied for the least number of votes
+            else if (candidate.getNumVotes() == lowestCandidates.get(0).getNumVotes())
+            {
+                //add it to the list
+                lowestCandidates.add(candidate);
+            }
+        }
+
+        //defaults the lowestCandidate to the first one in the list
+        CandidateIRV lowestCandidate = (CandidateIRV) lowestCandidates.get(0);
+
+        //if multiple candidates are tied for the lowest number of votes
+        if (lowestCandidates.size() > 1)
+        {
+            //choose one randomly instead
+            int index = (int) (fairRandom() * lowestCandidates.size());
+            lowestCandidate = (CandidateIRV) lowestCandidates.get(index);
+
+            //log this to the audit file
+            fileHandler.auditLog("The following candidates were tied for the least number of votes:");
+
+            for (Candidate cand : lowestCandidates)
+            {
+                fileHandler.auditLog("\t" + cand.getName());
+            }
+
+            fileHandler.auditLog(lowestCandidate.getName() + " was randomly selected to be the loser.");
+        }
+
+        //return the candidate with the fewest votes
+        return lowestCandidate;
+    }
+
+    /**
+     * gets a fair random number.
+     *
+     * @return a randomly generated double which will not fall subject to any fake randomness (via early random calling)
+     */
+    private double fairRandom()
+    {
+        double rand = -1;
+
+        //flips 10000 coins to get out of any fake randomness caused by early random function calling
+        for (int lcv = 0; lcv < 10000; lcv++)
+        {
+            rand = Math.random();
+        }
+
+        if (rand < 0)
+        {
+            System.out.println("Coin flip returned -1! This should be impossible.");
+        }
+
+        return rand;
+    }
+
+    /**
+     * generates a report from the current state of the election
+     */
+    public void generateReport()
+    {
+        fileHandler.reportLog("\nCandidate:\tVotes:\tWinner/Loser:");
+
+        for (Candidate candidate : candidates)
+        {
+            if (((CandidateIRV) candidate).hasWon())
+            {
+                fileHandler.reportLog(candidate.getName() + "\t" + candidate.getNumVotes() + "\tWinner");
+            }
+            else
+            {
+                fileHandler.reportLog(candidate.getName() + "\t" + candidate.getNumVotes() + "\tLoser");
+            }
+        }
     }
 }
 

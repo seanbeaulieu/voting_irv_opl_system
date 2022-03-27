@@ -181,4 +181,21 @@ public class FileHandler
             System.out.println("There was an exception while writing to the audit file");
         }
     }
+
+    /**
+     * records the provided string to the report file
+     * @param log the string to record to the report file
+     */
+    public void reportLog(String log)
+    {
+        //write to report file
+        try
+        {
+            report.write(log);
+        }
+        catch (IOException e)
+        {
+            System.out.println("There was an exception while writing to the report file");
+        }
+    }
 }
