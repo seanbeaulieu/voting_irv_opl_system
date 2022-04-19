@@ -88,6 +88,7 @@ public class FileHandler
         catch (FileNotFoundException e)
         {
             inputFileExists = false;
+            System.out.println("(does not exist)");
         }
     }
 

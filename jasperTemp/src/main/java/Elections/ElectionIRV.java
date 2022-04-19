@@ -7,6 +7,7 @@ import Misc.FileHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 /**
@@ -53,6 +54,7 @@ public class ElectionIRV extends Election
             if (electionType.equals("IRV"))
             {
                 numCandidates = fileHandler.nextInt();
+                numSeats = fileHandler.nextInt();
                 numBallots = fileHandler.nextInt();
                 String rawCandidates = fileHandler.nextLine();
 
@@ -167,32 +169,32 @@ public class ElectionIRV extends Election
      */
     private void calculateWinner()
     {
-        Candidate winner = null;
         int voteGoal = numBallots / 2 + 1;
-
         //move ballots around until a victor is found
-        while (winner == null)
+        while (winners.size() < numSeats && (candidates.size() > 0 || losers.size() > 0))
         {
             //loop through all unassigned ballots
             for (BallotIRV ballot : unassignedBallots)
             {
                 //get each ballot's next best candidate
-                CandidateIRV candidate = (CandidateIRV) ballot.nextCandidate();
-
+                CandidateIRV candidate = getNextCandidate(ballot);//(CandidateIRV) ballot.nextCandidate();
                 //if there is a best candidate then the ballot is reassigned to that candidate
                 if (candidate != null)
                 {
                     candidate.addBallot(ballot);
                     fileHandler.auditLog("Ballot #" + ballot.getId() + " was assigned to " + candidate.getName());
 
-                    //if the candidate has enough votes to win the election
-                    if (candidate.getNumVotes() > voteGoal)
+                    //if the candidate now has enough votes to win the election
+                    if (candidate.getNumVotes() >= voteGoal)
                     {
                         //mark them down as the winner
                         winners.add(candidate);
-                        winner = candidate;
 
-                        fileHandler.auditLog(candidate.getName() + " now has " + candidate.getNumVotes() + " and has won the election!");
+                        //remove from list of candidates who have neither won/lost
+                        candidates.remove(candidate);
+
+                        //log this winner to audit file
+                        fileHandler.auditLog(candidate.getName() + " now has " + candidate.getNumVotes() + " votes and has won the election!");
 
                         //stop looping through ballots
                         break;
@@ -210,9 +212,9 @@ public class ElectionIRV extends Election
             unassignedBallots.clear();
 
             //if no winner has been found
-            if (winner == null)
+            if (winners.size() < numSeats)
             {
-                fileHandler.auditLog("All unassigned ballots have been assigned and there is no winner.");
+                fileHandler.auditLog("All unassigned ballots have been assigned and there are not enough winners.");
 
                 //get the candidate with the least votes
                 CandidateIRV lowestCandidate = getLowestCandidate();
@@ -220,10 +222,24 @@ public class ElectionIRV extends Election
                 //if there are no more candidates
                 if (lowestCandidate == null)
                 {
-                    //the winner is the loser who lost most recently
-                    winner = losers.peek();
-                    winners.add(winner);
+                    //the next winner is the person who lost most recently
+                    try
+                    {
+                        Candidate winner = losers.pop();
+
+                        //add the next winner to the list of winners
+                        winners.add(winner);
+
+                        //log the new winner to the audit file
+                        fileHandler.auditLog("There are no more candidates who have not lost. " + winner.getName() + " lost most recently and has been moved from the list of losers to the list of winners.");
+                    }
+                    catch (EmptyStackException e)
+                    {
+                        //this code should be unreachable. (to enter this step of the while loop there must be a nonzero number of losers, but to enter this catch there must be zero losers)
+                        System.out.println("something bugged out really bad. (this message was expected to never be printed)");
+                    }
                 }
+
                 else
                 {
                     fileHandler.auditLog(lowestCandidate.getName() + " has the least votes. Their votes will now be unassigned.");
@@ -238,7 +254,7 @@ public class ElectionIRV extends Election
                     for (BallotIRV ballot : lowestCandidate.getBallots())
                     {
                         unassignedBallots.add(ballot);
-                        fileHandler.auditLog("Ballot #" + ballot.getId() + " has been unassigned.");
+                        fileHandler.auditLog("Ballot #" + ballot.getId() + " has been unassigned from " + lowestCandidate.getName() + ".");
                     }
 
                     //clear the candidate's ballots
@@ -358,6 +374,27 @@ public class ElectionIRV extends Election
         {
             fileHandler.reportLog(candidate.getName() + "\t" + candidate.getNumVotes() + "\tLoser");
         }
+    }
+
+    /**
+     * gets the next valid candidate from the supplied ballot
+     * (a candidate is valid if they have neither won nor lost)
+     * @param ballot a ballot to read the next candidate of
+     * @return a CandidateIRV representing this ballot's next candidate
+     */
+    public CandidateIRV getNextCandidate(BallotIRV ballot)
+    {
+        //get the next candidate on the ballot
+        Candidate next = ballot.nextCandidate();
+
+        //ignore all non-null candidates who have already won/lost
+        while(next != null && !candidates.contains(next))
+        {
+            fileHandler.auditLog("The next candidate on ballot #" + ballot.getId() + " is " + next.getName() + " but " + next.getName() + " has already won/lost. Moving on to the next candidate on the ballot.");
+            next = ballot.nextCandidate();
+        }
+
+        return (CandidateIRV) next;
     }
 }
 
