@@ -1,9 +1,7 @@
 package Elections;
 
 import Candidates.Candidate;
-import Candidates.CandidateIRV;
 import Candidates.CandidateOPL;
-import Misc.BallotIRV;
 import Misc.FileHandler;
 
 import java.util.ArrayList;
