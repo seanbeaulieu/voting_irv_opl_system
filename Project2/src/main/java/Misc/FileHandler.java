@@ -89,6 +89,7 @@ public class FileHandler
         {
             System.out.println("file does not exist");
             inputFileExists = false;
+            System.out.println("(does not exist)");
         }
     }
 
