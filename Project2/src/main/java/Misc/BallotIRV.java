@@ -45,9 +45,9 @@ public class BallotIRV
     }
 
     /**
-     * Gets the next candidate from this ballot
+     * Gets the next candidate from this ballot and removes it from this ballot's list
      *
-     * @return a Candidate representing this ballot's next best choice
+     * @return a Candidate representing this ballot's current best choice
      */
     public Candidate nextCandidate()
     {
@@ -79,14 +79,5 @@ public class BallotIRV
         }
 
         return out;
-    }
-
-    /**
-     * Gets this ballot's list of Candidates
-     * @return an ArrayList of Candidate objects, representing the Candidates that are marked on this ballot, in the order that they are ranked.
-     */
-    public ArrayList<Candidate> getCandidates()
-    {
-        return candidates;
     }
 }
