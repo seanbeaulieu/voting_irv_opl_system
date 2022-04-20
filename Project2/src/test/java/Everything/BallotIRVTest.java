@@ -1,7 +1,6 @@
-package Misc;
+package Everything;
 
-import Candidates.Candidate;
-import org.junit.jupiter.api.Assertions;
+import Everything.Candidates.Candidate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package Misc;
+package Everything;
 
 import java.io.File;
 import java.io.FileNotFoundException;

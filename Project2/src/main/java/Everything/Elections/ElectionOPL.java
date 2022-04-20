@@ -1,8 +1,8 @@
-package Elections;
+package Everything.Elections;
 
-import Candidates.Candidate;
-import Candidates.CandidateOPL;
-import Misc.FileHandler;
+import Everything.Candidates.Candidate;
+import Everything.Candidates.CandidateOPL;
+import Everything.FileHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;

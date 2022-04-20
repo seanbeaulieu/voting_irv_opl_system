@@ -1,4 +1,4 @@
-package Candidates;
+package Everything.Candidates;
 
 /**
  * Represents one Candidate in an OPL based Election

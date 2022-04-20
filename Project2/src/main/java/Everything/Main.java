@@ -1,9 +1,9 @@
-package Misc;
+package Everything;
 
-import Candidates.Candidate;
-import Elections.Election;
-import Elections.ElectionIRV;
-import Elections.ElectionOPL;
+import Everything.Candidates.Candidate;
+import Everything.Elections.Election;
+import Everything.Elections.ElectionIRV;
+import Everything.Elections.ElectionOPL;
 
 import java.util.ArrayList;
 import java.util.Scanner;

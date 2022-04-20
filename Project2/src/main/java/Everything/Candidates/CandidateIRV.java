@@ -1,6 +1,6 @@
-package Candidates;
+package Everything.Candidates;
 
-import Misc.BallotIRV;
+import Everything.BallotIRV;
 
 import java.util.ArrayList;
 

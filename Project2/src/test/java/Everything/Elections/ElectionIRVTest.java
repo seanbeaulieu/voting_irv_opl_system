@@ -1,9 +1,9 @@
-package Elections;
+package Everything.Elections;
 
-import Candidates.Candidate;
-import Candidates.CandidateIRV;
-import Misc.BallotIRV;
-import Misc.FileHandler;
+import Everything.Candidates.Candidate;
+import Everything.Candidates.CandidateIRV;
+import Everything.BallotIRV;
+import Everything.FileHandler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

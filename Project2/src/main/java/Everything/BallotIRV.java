@@ -1,6 +1,6 @@
-package Misc;
+package Everything;
 
-import Candidates.Candidate;
+import Everything.Candidates.Candidate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
