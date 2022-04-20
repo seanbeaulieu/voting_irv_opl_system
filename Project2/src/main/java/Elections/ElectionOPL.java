@@ -33,10 +33,11 @@ public class ElectionOPL extends Election
     }
 
     /**
-     * Calculates the results of this Elections.ElectionOPL
+     * Reads all the information (candidates, ballots, etc) from the supplied input file into this ElectionIRV object
+     * @return a boolean - true if ran successfully, false if errors were encountered
      */
     @Override
-    public boolean calcResults()
+    public boolean readInputs()
     {
         if (fileHandler.inputFileExists())
         {
@@ -61,12 +62,6 @@ public class ElectionOPL extends Election
                     return false;
                 }
 
-                //fill seats according to droop
-                int droopSeats = fillDroopSeats();
-
-                //fill any seats which were not allocated via droop
-                fillExcessSeats(numSeats - droopSeats);
-
                 //successful election!
                 return true;
             }
@@ -81,6 +76,18 @@ public class ElectionOPL extends Election
             System.out.println("Input file does not exist.");
             return false;
         }
+    }
+
+    /**
+     * calculates the winners of this election according to OPL
+     */
+    public void calcResults()
+    {
+        //fill seats according to droop
+        int droopSeats = fillDroopSeats();
+
+        //fill any seats which were not allocated via droop
+        fillExcessSeats(numSeats - droopSeats);
     }
 
     /**

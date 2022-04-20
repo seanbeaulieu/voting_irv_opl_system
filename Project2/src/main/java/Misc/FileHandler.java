@@ -44,7 +44,7 @@ public class FileHandler
         //set up the audit file
         try
         {
-            audit = new FileWriter("audit.txt");
+            audit = new FileWriter("./testing/audit.txt");
         }
         catch (IOException e)
         {
@@ -55,7 +55,7 @@ public class FileHandler
         //set up the report file
         try
         {
-            report = new FileWriter("report.txt");
+            report = new FileWriter("./testing/report.txt");
         }
         catch (IOException e)
         {

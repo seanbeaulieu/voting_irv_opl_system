@@ -8,7 +8,8 @@ import Elections.ElectionOPL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**ex
+/**
+ * ex
  * Used to take input commands from the user.
  * Written by Jasper Rutherford
  */
@@ -38,6 +39,7 @@ public class Main
 
     /**
      * Used to start the program
+     *
      * @param args anything sent in from the user (all ignored)
      */
     public static void main(String[] args)
@@ -169,11 +171,13 @@ public class Main
      */
     private static void runElection()
     {
-        boolean success = election.calcResults();
+        //try to read information form the supplied file
+        boolean success = election.readInputs();
 
-        //good election, no errors
+        //good read, no errors
         if (success)
         {
+            election.calcResults();
             System.out.println("Successfully ran the election.");
 
             //update which commands are available
@@ -183,7 +187,7 @@ public class Main
             displaywinnersAvailable = true;
         }
 
-        //bad election, errors
+        //bad read, errors
         else
         {
             System.out.println("There was a problem with the supplied input file. Please input a new file.");

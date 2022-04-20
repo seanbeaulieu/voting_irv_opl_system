@@ -40,11 +40,13 @@ public class ElectionIRV extends Election
         unassignedBallots = new ArrayList<>();
     }
 
+
     /**
-     * Calculates the results of the election according to IRV
+     * Reads all the information (candidates, ballots, etc) from the supplied input file into this ElectionIRV object
+     * @return a boolean - true if ran successfully, false if errors were encountered
      */
     @Override
-    public boolean calcResults()
+    public boolean readInputs()
     {
         if (fileHandler.inputFileExists())
         {
@@ -90,9 +92,6 @@ public class ElectionIRV extends Election
                 {
                     fileHandler.auditLog("Not Shuffling Ballots");
                 }
-
-                //calculate who won the election
-                calculateWinner();
 
                 //successful election!
                 return true;
@@ -165,9 +164,9 @@ public class ElectionIRV extends Election
     }
 
     /**
-     * calculates the winner of this election according to IRV
+     * calculates the winners of this election according to IRV
      */
-    private void calculateWinner()
+    public void calcResults()
     {
         int voteGoal = numBallots / 2 + 1;
         //move ballots around until a victor is found

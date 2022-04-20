@@ -48,8 +48,9 @@ public class Election
 
     /**
      * Creates an election with the given inputs
+     *
      * @param fileHandler how this election will get inputs from files/send outputs to files
-     * @param shuffle whether or not this election should shuffle its ballots (only used if the election is IRV based)
+     * @param shuffle     whether or not this election should shuffle its ballots (only used if the election is IRV based)
      */
     public Election(FileHandler fileHandler, boolean shuffle)
     {
@@ -64,17 +65,30 @@ public class Election
     }
 
     /**
-     * Calculates the results of the election
-     * @return true if the election was ran successfully, false if there was an error
+     * Reads all the information (candidates, ballots, etc) from the supplied input file into this Election object
+     *
+     * @return a boolean - true if ran successfully, false if errors were encountered
      */
-    public boolean calcResults()
+    public boolean readInputs()
+    {
+        //TODO: if OPL's calcResults gets split, then uncomment this
+        //System.out.println("Somehow called Election's readInputs method. This should be impossible.");
+
+        //TODO: if OPL's calcResults gets split, delete this line
+        return true;
+    }
+
+    /**
+     * Calculates the results of the election
+     */
+    public void calcResults()
     {
         System.out.println("Somehow called Election's calcResults method. This should be impossible.");
-        return false;
     }
 
     /**
      * gets the list of winners of this election
+     *
      * @return an ArrayList of Candidates which represent which candidates have won this election
      */
     public ArrayList<Candidate> getWinners()
