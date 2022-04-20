@@ -80,4 +80,13 @@ public class BallotIRV
 
         return out;
     }
+
+    /**
+     * Gets this ballot's list of Candidates
+     * @return an ArrayList of Candidate objects, representing the Candidates that are marked on this ballot, in the order that they are ranked.
+     */
+    public ArrayList<Candidate> getCandidates()
+    {
+        return candidates;
+    }
 }
