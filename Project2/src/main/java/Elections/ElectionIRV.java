@@ -93,7 +93,7 @@ public class ElectionIRV extends Election
                     fileHandler.auditLog("Not Shuffling Ballots");
                 }
 
-                //successful election!
+                //successful read!
                 return true;
             }
             else

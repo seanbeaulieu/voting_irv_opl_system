@@ -62,7 +62,7 @@ public class ElectionOPL extends Election
                     return false;
                 }
 
-                //successful election!
+                //successful read!
                 return true;
             }
             else
