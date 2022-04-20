@@ -33,7 +33,7 @@ public class ElectionOPL extends Election
     }
 
     /**
-     * Reads all the information (candidates, ballots, etc) from the supplied input file into this ElectionIRV object
+     * Reads all the information (candidates, ballots, parties, etc) from the supplied input file into this ElectionOPL object
      * @return a boolean - true if ran successfully, false if errors were encountered
      */
     @Override
