@@ -34,7 +34,20 @@ public class FileHandler
     private boolean inputFileExists;
 
     /**
+     * holds the contents of the audit file (useful for testing, this does not actually go out to the user)
+     * everything that is logged to the audit file is also logged to this string
+     */
+    private String auditFileContent;
+
+    /**
+     * holds the contents of the report file (useful for testing, this does not actually go out to the user)
+     * everything that is logged to the report file is also logged to this string
+     */
+    private String reportFileContent;
+
+    /**
      * creates a file handler which draws from the supplied input file
+     *
      * @param inputFile the file to draw
      */
     public FileHandler(String inputFile)
@@ -45,6 +58,7 @@ public class FileHandler
         try
         {
             audit = new FileWriter("./testing/audit.txt");
+            auditFileContent = "";
         }
         catch (IOException e)
         {
@@ -56,6 +70,7 @@ public class FileHandler
         try
         {
             report = new FileWriter("./testing/report.txt");
+            reportFileContent = "";
         }
         catch (IOException e)
         {
@@ -67,6 +82,7 @@ public class FileHandler
     /**
      * true if the supplied input file exists
      * false otherwise
+     *
      * @return a boolean representing whether or not the supplied input file exists
      */
     public boolean inputFileExists()
@@ -76,6 +92,7 @@ public class FileHandler
 
     /**
      * tries to set the supplied inputFile
+     *
      * @param inputFile the file to draw input from
      */
     public void setInputFile(String inputFile)
@@ -93,6 +110,7 @@ public class FileHandler
 
     /**
      * gets the next line from the input file
+     *
      * @return a string representing the next line from the input file
      */
     public String nextLine()
@@ -111,16 +129,16 @@ public class FileHandler
     /**
      * reads in the next line of input and returns the first number found in that line
      * This is expected to work as such:
-     *
-     *      if the file is:
-     *      "
-     *      4 5
-     *      6
-     *      7
-     *      8 9 1
-     *      2
-     *      "
-     *      and nextInt() is called 5 times, it should return 4, 6, 7, 8, 2
+     * <p>
+     * if the file is:
+     * "
+     * 4 5
+     * 6
+     * 7
+     * 8 9 1
+     * 2
+     * "
+     * and nextInt() is called 5 times, it should return 4, 6, 7, 8, 2
      *
      * @return an int representing the first number found on the next line
      */
@@ -166,6 +184,7 @@ public class FileHandler
 
     /**
      * records the provided string to the audit file
+     *
      * @param log the string to record to the audit file
      */
     public void auditLog(String log)
@@ -174,6 +193,7 @@ public class FileHandler
         try
         {
             audit.write(log + "\n");
+            auditFileContent += log + "\n";
         }
         catch (IOException e)
         {
@@ -183,6 +203,7 @@ public class FileHandler
 
     /**
      * records the provided string to the report file
+     *
      * @param log the string to record to the report file
      */
     public void reportLog(String log)
@@ -191,10 +212,29 @@ public class FileHandler
         try
         {
             report.write(log + "\n");
+            reportFileContent += log + "\n";
         }
         catch (IOException e)
         {
             System.out.println("There was an exception while writing to the report file");
         }
+    }
+
+    /**
+     * Gets the current contents of the audit file (or an estimate of what it should be based on all of the things that have been logged to the audit file)
+     * @return a String representing the current contents of the audit file.
+     */
+    public String getAuditFileContent()
+    {
+        return auditFileContent;
+    }
+
+    /**
+     * Gets the current contents of the report file (or an estimate of what it should be based on all of the things that have been logged to the report file)
+     * @return a String representing the current contents of the report file.
+     */
+    public String getReportFileContent()
+    {
+        return reportFileContent;
     }
 }
