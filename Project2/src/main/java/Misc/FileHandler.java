@@ -230,6 +230,7 @@ public class FileHandler
             //remove that filename from the list
             filenames.remove(0);
 
+            inputFileExists = true;
             //success!
             return true;
         }
@@ -239,5 +240,14 @@ public class FileHandler
             System.out.println("Failed to open " + nextFilename);
             return false;
         }
+    }
+
+    /**
+     * Gets the number of filenames that are currently stored in this FileHandler object
+     * @return an int equal to filenames.size()
+     */
+    public int getNumFilenames()
+    {
+        return filenames.size();
     }
 }

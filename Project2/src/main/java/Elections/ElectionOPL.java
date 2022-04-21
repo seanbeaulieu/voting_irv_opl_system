@@ -306,9 +306,8 @@ public class ElectionOPL extends Election
      */
     private ArrayList<String> getSortedPartyNames()
     {
-        ArrayList<String> partyNames = new ArrayList<>();
         ArrayList<String> partyNamesSorted = new ArrayList<>();
-        partyNames.addAll(parties.keySet());
+        ArrayList<String> partyNames = new ArrayList<>(parties.keySet());
 
         ArrayList<Integer> partyVoteScores = new ArrayList<>();
         ArrayList<Integer> partyVoteScoresSorted = new ArrayList<>();
