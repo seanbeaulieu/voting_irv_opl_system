@@ -334,7 +334,7 @@ public class ElectionIRV extends Election
      *
      * @return a randomly generated double which will not fall subject to any fake randomness (via early random calling)
      */
-    private double fairRandom()
+    public static double fairRandom()
     {
         double rand = -1;
 
