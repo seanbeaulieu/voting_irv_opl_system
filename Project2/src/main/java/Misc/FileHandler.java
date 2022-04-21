@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -12,6 +13,11 @@ import java.util.Scanner;
  */
 public class FileHandler
 {
+    /**
+     * The list of all filenames which have been supplied by the user
+     */
+    private ArrayList<String> filenames;
+
     /**
      * Where stuff will be read from
      */
@@ -34,12 +40,12 @@ public class FileHandler
     private boolean inputFileExists;
 
     /**
-     * creates a file handler which draws from the supplied input file
-     * @param inputFile the file to draw
+     * creates a default FileHandler which has no files to draw input from.
      */
-    public FileHandler(String inputFile)
+    public FileHandler()
     {
-        setInputFile(inputFile);
+        filenames = new ArrayList<>();
+        inputFileExists = false;
 
         //set up the audit file
         try
@@ -67,6 +73,7 @@ public class FileHandler
     /**
      * true if the supplied input file exists
      * false otherwise
+     *
      * @return a boolean representing whether or not the supplied input file exists
      */
     public boolean inputFileExists()
@@ -75,24 +82,18 @@ public class FileHandler
     }
 
     /**
-     * tries to set the supplied inputFile
-     * @param inputFile the file to draw input from
+     * blindly adds the given file to the list of filenames
+     *
+     * @param filename the filename to be added to this FileHandler's list of filenames
      */
-    public void setInputFile(String inputFile)
+    public void addFilename(String filename)
     {
-        try
-        {
-            input = new Scanner(new File(inputFile));
-            inputFileExists = true;
-        }
-        catch (FileNotFoundException e)
-        {
-            inputFileExists = false;
-        }
+        filenames.add(filename);
     }
 
     /**
      * gets the next line from the input file
+     *
      * @return a string representing the next line from the input file
      */
     public String nextLine()
@@ -111,16 +112,16 @@ public class FileHandler
     /**
      * reads in the next line of input and returns the first number found in that line
      * This is expected to work as such:
-     *
-     *      if the file is:
-     *      "
-     *      4 5
-     *      6
-     *      7
-     *      8 9 1
-     *      2
-     *      "
-     *      and nextInt() is called 5 times, it should return 4, 6, 7, 8, 2
+     * <p>
+     * if the file is:
+     * "
+     * 4 5
+     * 6
+     * 7
+     * 8 9 1
+     * 2
+     * "
+     * and nextInt() is called 5 times, it should return 4, 6, 7, 8, 2
      *
      * @return an int representing the first number found on the next line
      */
@@ -166,6 +167,7 @@ public class FileHandler
 
     /**
      * records the provided string to the audit file
+     *
      * @param log the string to record to the audit file
      */
     public void auditLog(String log)
@@ -183,6 +185,7 @@ public class FileHandler
 
     /**
      * records the provided string to the report file
+     *
      * @param log the string to record to the report file
      */
     public void reportLog(String log)
@@ -195,6 +198,46 @@ public class FileHandler
         catch (IOException e)
         {
             System.out.println("There was an exception while writing to the report file");
+        }
+    }
+
+    /**
+     * Advances the FileHandler's Scanner to the next file in the list
+     *
+     * @return true if a file was successfully opened, false otherwise
+     */
+    public boolean nextInputFile()
+    {
+        //close any previously opened input file
+        if (inputFileExists)
+        {
+            input.close();
+        }
+
+        //return false if there are no more filenames
+        if (filenames.isEmpty())
+        {
+            return false;
+        }
+
+        //get the next filename
+        String nextFilename = filenames.get(0);
+        try
+        {
+            //open a new Scanner with that filename
+            input = new Scanner(new File(nextFilename));
+
+            //remove that filename from the list
+            filenames.remove(0);
+
+            //success!
+            return true;
+        }
+        catch (FileNotFoundException e)
+        {
+            //fail
+            System.out.println("Failed to open " + nextFilename);
+            return false;
         }
     }
 }
