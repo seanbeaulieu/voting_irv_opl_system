@@ -50,7 +50,8 @@ public class ElectionIRV extends Election
     {
         if (fileHandler.inputFileExists())
         {
-            String electionType = fileHandler.nextLine();
+            //String electionType = fileHandler.nextLine();
+
 
             //check first line
             if (electionType.equals("IRV"))

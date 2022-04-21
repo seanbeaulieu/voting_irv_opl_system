@@ -60,7 +60,7 @@ public class Main
                 String filename = scanner.nextLine();
                 System.out.println("'" + filename + "'");
 
-                setFileName(filename);
+                addFileName(filename);
             }
 
             //runopl command
@@ -124,7 +124,7 @@ public class Main
      *
      * @param filename the file to be set as the input file for election data
      */
-    private static void setFileName(String filename)
+    private static void addFileName(String filename)
     {
         //save the inputfile
         Main.filename = filename;
@@ -132,14 +132,11 @@ public class Main
         //if filehandler does not exist, create it
         if (fileHandler == null)
         {
-            fileHandler = new FileHandler(filename);
+            fileHandler = new FileHandler();
         }
 
-        //otherwise just update the active fileHandler
-        else
-        {
-            fileHandler.setInputFile(filename);
-        }
+        //update the active fileHandler with the filename
+        fileHandler.addFilename(filename);
 
         //update which commands are available
         runirvAvailable = true;
