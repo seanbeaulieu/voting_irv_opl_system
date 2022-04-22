@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CandidateOPLTest {
 
     @Test
-    @DisplayName("Test Get Party") 
+    @DisplayName("Test Get Party")
     void getParty() {
         final CandidateOPL john = new CandidateOPL("John", "D");
         assertEquals("D", john.getParty());
