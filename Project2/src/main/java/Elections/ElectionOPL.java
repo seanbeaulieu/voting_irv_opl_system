@@ -58,6 +58,11 @@ public class ElectionOPL extends Election
                     System.out.println("Read a number of seats which did not match up with other files in file #" + currentFilenameNumber);
                     return false;
                 }
+                else
+                {
+                    numSeats = tempNumSeats;
+                }
+
                 numBallots = fileHandler.nextInt();
 
                 String rawCandidates = fileHandler.nextLine();
