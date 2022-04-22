@@ -244,10 +244,20 @@ public class FileHandler
 
     /**
      * Gets the number of filenames that are currently stored in this FileHandler object
+     *
      * @return an int equal to filenames.size()
      */
     public int getNumFilenames()
     {
         return filenames.size();
+    }
+
+    /**
+     * Gets a list of all filenames currently stored in this FileHandler object
+     * @return an ArrayList of Strings representing all filenames currently stored in this FileHandler object
+     */
+    public ArrayList<String> getFilenames()
+    {
+        return filenames;
     }
 }
