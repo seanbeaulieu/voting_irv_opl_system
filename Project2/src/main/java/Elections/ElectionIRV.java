@@ -48,66 +48,90 @@ public class ElectionIRV extends Election
     @Override
     public boolean readInputs()
     {
-        if (fileHandler.inputFileExists())
+        int currentFilenameNumber = 1;
+        int numFiles = fileHandler.getNumFilenames();
+        // check if the next filename exists
+        while(fileHandler.nextInputFile())
         {
-            //String electionType = fileHandler.nextLine();
+//            if (fileHandler.inputFileExists()) {
+                String electionType = fileHandler.nextLine();
 
-
-            //check first line
-            if (electionType.equals("IRV"))
-            {
-                numCandidates = fileHandler.nextInt();
-                numSeats = fileHandler.nextInt();
-                numBallots = fileHandler.nextInt();
-                String rawCandidates = fileHandler.nextLine();
-
-                //read candidates
-                if (!getCandidatesFromIRVLine(rawCandidates))
-                {
-                    System.out.println("Error while trying to read Candidates");
-                    return false;
-                }
-
-                //read ballots
-                if (!readBallots())
-                {
-                    System.out.println("Error while trying to read ballots");
-                    return false;
-                }
-
-                //shuffle ballots if shuffle is on
-                if (shuffle)
-                {
-                    fileHandler.auditLog("Shuffling Ballots");
-                    Collections.shuffle(unassignedBallots);
-
-                    fileHandler.auditLog("New Ballot Order:");
-                    for (BallotIRV ballot : unassignedBallots)
-                    {
-                        fileHandler.auditLog("#" + ballot.getId());
+                //check first line election type
+                if (electionType.equals("IRV")) {
+                    // check if the number of candidates is the same across files
+                    int tempNumCandidates = fileHandler.nextInt();
+                    if(tempNumCandidates != -1 && tempNumCandidates != numSeats){
+                        System.out.println("Error: The number of candidates in file number " + (currentFilenameNumber) +
+                                " is not consistent with the previous file's number of candidates.");
+                        return false;
                     }
-                }
 
-                //don't shuffle if shuffle is off
-                else
-                {
-                    fileHandler.auditLog("Not Shuffling Ballots");
-                }
+                    // check if the number of seats is the same across files
+                    int tempNumSeats = fileHandler.nextInt();
+                    if(numSeats != -1 && tempNumSeats != numSeats){
+                        System.out.println("Error: The number of seats in file number " + (currentFilenameNumber) +
+                                " is not consistent with the previous file's number of seats.");
+                        return false;
+                    }
 
-                //successful read!
-                return true;
+                    numBallots = fileHandler.nextInt();
+
+                    String rawCandidates = fileHandler.nextLine();
+
+                    //read candidates
+                    if (!getCandidatesFromIRVLine(rawCandidates)) {
+                        System.out.println("Error while trying to read Candidates in file number " + (currentFilenameNumber));
+                        return false;
+                    }
+                    else if(!tempCandidates.equals(candidates)){
+                        System.out.println("Error: The candidates in file number " + (currentFilenameNumber) +
+                                " is not consistent with the previous file's candidates.");
+                        return false;
+                    }
+
+                    //read ballots
+                    if (!readBallots()) {
+                        System.out.println("Error while trying to read ballots in file number " + (currentFilenameNumber));
+                        return false;
+                    }
+
+                    //shuffle ballots if shuffle is on
+                    if (shuffle) {
+                        fileHandler.auditLog("Shuffling Ballots");
+                        Collections.shuffle(unassignedBallots);
+
+                        fileHandler.auditLog("New Ballot Order:");
+                        for (BallotIRV ballot : unassignedBallots) {
+                            fileHandler.auditLog("#" + ballot.getId());
+                        }
+                    }
+
+                    //don't shuffle if shuffle is off
+                    else {
+                        fileHandler.auditLog("Not Shuffling Ballots");
+                    }
+
+                    //successful read! increment file numbers
+                    return true;
+
+                } else {
+                    System.out.println("First line of input file " + (currentFilenameNumber) +
+                            " does not match election type.");
+                    return false;
+                }
             }
-            else
-            {
-                System.out.println("First line of input file does not match election type.");
-                return false;
-            }
-        }
-        else
-        {
-            System.out.println("Input file does not exist.");
+//            else {
+//                System.out.println("Input file " + (i) + "does not exist.");
+//                return false;
+//            }
+//        }
+        // check if the number of files expected is equal to the number of files read.
+        if(numFiles != (currentFilenameNumber - 1)){
+            System.out.println("File number " + currentFilenameNumber + " failed to open.");
             return false;
         }
+        //  successfully read the correct number of files
+        return true;
     }
 
     /**
@@ -124,7 +148,7 @@ public class ElectionIRV extends Election
         // populate the candidates arrayList with candidates
         for (int i = 0; i < candidates_arr.length; i++)
         {
-            candidates.add(new CandidateIRV(candidates_arr[i]));
+            tempCandidates.add(new CandidateIRV(candidates_arr[i]));
         }
 
         return true;
