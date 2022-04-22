@@ -63,7 +63,7 @@ public class Election
         this.shuffle = shuffle;
 
         numCandidates = -1;
-        numBallots = -1;
+        numBallots = 0;
         numSeats = -1;
         candidates = new ArrayList<>();
         tempCandidates = new ArrayList<>();
