@@ -77,6 +77,10 @@ public class ElectionOPL extends Election
                     System.out.println("File #" + currentFilenameNumber + " had different candidates than the previous file");
                     return false;
                 }
+                else
+                {
+                    candidates = tempCandidates;
+                }
 
                 if (!readBallots())
                 {

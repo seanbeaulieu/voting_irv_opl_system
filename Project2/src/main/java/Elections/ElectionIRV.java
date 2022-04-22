@@ -100,6 +100,10 @@ public class ElectionIRV extends Election
                             " is not consistent with the previous file's candidates.");
                     return false;
                 }
+                else
+                {
+                    candidates = tempCandidates;
+                }
 
                 //read ballots
                 if (!readBallots())
