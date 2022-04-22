@@ -62,7 +62,7 @@ public class ElectionIRV extends Election
             {
                 // check if the number of candidates is the same across files
                 int tempNumCandidates = fileHandler.nextInt();
-                if (numCandidates != -1 && tempNumCandidates != numSeats)
+                if (numCandidates != -1 && tempNumCandidates != numCandidates)
                 {
                     System.out.println("Error: The number of candidates in file number " + (currentFilenameNumber) +
                             " is not consistent with the previous file's number of candidates.");
@@ -94,7 +94,7 @@ public class ElectionIRV extends Election
                     System.out.println("Error while trying to read Candidates in file number " + (currentFilenameNumber));
                     return false;
                 }
-                else if (!tempCandidates.equals(candidates))
+                else if (!tempCandidates.equals(candidates) && candidates.size() != 0)
                 {
                     System.out.println("Error: The candidates in file number " + (currentFilenameNumber) +
                             " is not consistent with the previous file's candidates.");
@@ -102,7 +102,8 @@ public class ElectionIRV extends Election
                 }
                 else
                 {
-                    candidates = tempCandidates;
+                    Collections.copy(tempCandidates, candidates);
+                    tempCandidates.clear();
                 }
 
                 //read ballots
