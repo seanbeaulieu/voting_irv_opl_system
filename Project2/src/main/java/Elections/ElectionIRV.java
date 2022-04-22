@@ -68,6 +68,9 @@ public class ElectionIRV extends Election
                             " is not consistent with the previous file's number of candidates.");
                     return false;
                 }
+                else{
+                    numCandidates = tempNumCandidates;
+                }
 
                 // check if the number of seats is the same across files
                 int tempNumSeats = fileHandler.nextInt();
@@ -76,6 +79,9 @@ public class ElectionIRV extends Election
                     System.out.println("Error: The number of seats in file number " + (currentFilenameNumber) +
                             " is not consistent with the previous file's number of seats.");
                     return false;
+                }
+                else{
+                    numSeats = tempNumSeats;
                 }
 
                 numBallots = fileHandler.nextInt();
