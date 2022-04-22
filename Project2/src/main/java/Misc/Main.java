@@ -5,6 +5,7 @@ import Elections.Election;
 import Elections.ElectionIRV;
 import Elections.ElectionOPL;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -37,8 +38,6 @@ public class Main
     private static boolean generatereportAvailable = false;
     private static boolean displaywinnersAvailable = false;
 
-    private static boolean testMultIRV = true;
-
     /**
      * Used to start the program
      *
@@ -48,22 +47,13 @@ public class Main
     {
         //used for command line input
         Scanner scanner = new Scanner(System.in);
+        fileHandler = new FileHandler();
 
         //loop until program should exit
         while (!exit)
         {
             System.out.println("Awaiting Input.");
             String input = scanner.nextLine().toLowerCase();
-
-            // test multiple IRV command
-//            if(testMultIRV && input.equals("multirv"))
-//            {
-//                System.out.println("Running multiple IRV files for testing.");
-//                addFileName("multipleIRV1");
-//                addFileName("multipleIRV2");
-//                addFileName("multipleIRV3");
-//                runIRV();
-//            }
 
             //filename command
             if (filenameAvailable && input.equals("filename"))
@@ -141,14 +131,8 @@ public class Main
         //save the inputfile
         Main.filename = filename;
 
-        //if filehandler does not exist, create it
-        if (fileHandler == null)
-        {
-            fileHandler = new FileHandler();
-        }
-
         //update the active fileHandler with the filename
-        fileHandler.addFilename("./testing/" + filename + ".txt");
+        fileHandler.addFilename("./testing/" + filename);
 
         //update which commands are available
         runirvAvailable = true;

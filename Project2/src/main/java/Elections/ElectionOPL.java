@@ -63,7 +63,8 @@ public class ElectionOPL extends Election
                     numSeats = tempNumSeats;
                 }
 
-                numBallots = fileHandler.nextInt();
+                int partialBallots = fileHandler.nextInt();
+                numBallots += partialBallots;
 
                 String rawCandidates = fileHandler.nextLine();
 
@@ -77,13 +78,17 @@ public class ElectionOPL extends Election
                     System.out.println("File #" + currentFilenameNumber + " had different candidates than the previous file");
                     return false;
                 }
+                else if (candidates.size() == 0)
+                {
+                    candidates.addAll(tempCandidates);
+                    tempCandidates.clear();
+                }
                 else
                 {
-                    Collections.copy(tempCandidates, candidates);
                     tempCandidates.clear();
                 }
 
-                if (!readBallots())
+                if (!readBallots(partialBallots))
                 {
                     System.out.println("Error while trying to read ballots from file #" + currentFilenameNumber);
                     return false;
@@ -146,8 +151,12 @@ public class ElectionOPL extends Election
             //adds a candidate with the provided information to the list of candidates
             tempCandidates.add(new CandidateOPL(candidateName, partyName));
 
-            //set the party's number of votes to zero
-            parties.put(partyName, 0);
+            //if this party has not yet been added to the party tracker
+            if (!parties.keySet().contains(partyName))
+            {
+                //add the party to the tracker (set the party's number of votes to zero)
+                parties.put(partyName, 0);
+            }
         }
 
         //return success
@@ -157,12 +166,13 @@ public class ElectionOPL extends Election
     /**
      * Reads the ballots in from the input file
      *
+     * @param partialBallots the number of ballots to read in
      * @return true if successful and false otherwise
      */
-    private boolean readBallots()
+    private boolean readBallots(int partialBallots)
     {
         // read each line
-        for (int i = 0; i < numBallots; i++)
+        for (int i = 0; i < partialBallots; i++)
         {
             // Read in a ballot, and populate an array with the choices.
             String rawBallot = fileHandler.nextLine();
@@ -304,16 +314,16 @@ public class ElectionOPL extends Election
                     //sort the Candidates into decreasing order by number of votes
                     remainingCandidates.sort(Collections.reverseOrder());
 
-                    //get the Candidates.Candidate with the most votes (within this party)
+                    //get the Candidate with the most votes (within this party)
                     Candidate winner = remainingCandidates.get(0);
 
-                    //add that Candidates.Candidate to the list of winners
+                    //add that Candidate to the list of winners
                     winners.add(winner);
 
                     //remove that Candidates.Candidate from this party's list of candidates
                     remainingCandidates.remove(0);
 
-                    //remove that Candidates.Candidate from this election's list of candidates who have not won
+                    //remove that Candidate from this election's list of candidates who have not won
                     candidates.remove(winner);
 
                     //decrease the number of seats remaining
