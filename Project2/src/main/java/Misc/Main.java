@@ -136,7 +136,7 @@ public class Main
         }
 
         //update the active fileHandler with the filename
-        fileHandler.addFilename("./testing/" + filename);
+        fileHandler.addFilename("./testing/" + filename + ".txt");
 
         //update which commands are available
         runirvAvailable = true;
