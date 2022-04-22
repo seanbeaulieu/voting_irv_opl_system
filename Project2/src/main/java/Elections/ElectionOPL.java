@@ -72,14 +72,15 @@ public class ElectionOPL extends Election
                     System.out.println("Error while trying to read Candidates in file #" + currentFilenameNumber);
                     return false;
                 }
-                else if (!tempCandidates.equals(candidates))
+                else if (!tempCandidates.equals(candidates) && candidates.size() != 0)
                 {
                     System.out.println("File #" + currentFilenameNumber + " had different candidates than the previous file");
                     return false;
                 }
                 else
                 {
-                    candidates = tempCandidates;
+                    Collections.copy(tempCandidates, candidates);
+                    tempCandidates.clear();
                 }
 
                 if (!readBallots())
