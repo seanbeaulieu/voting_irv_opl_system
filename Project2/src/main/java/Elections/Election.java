@@ -37,6 +37,11 @@ public class Election
     protected ArrayList<Candidate> candidates;
 
     /**
+     * A temporary list for candidates to be added to
+     */
+    protected ArrayList<Candidate> tempCandidates;
+
+    /**
      * The list of Candidates who have won seats
      */
     protected ArrayList<Candidate> winners;
@@ -57,10 +62,11 @@ public class Election
         this.fileHandler = fileHandler;
         this.shuffle = shuffle;
 
-        numCandidates = 0;
-        numBallots = 0;
-        numSeats = 0;
+        numCandidates = -1;
+        numBallots = -1;
+        numSeats = -1;
         candidates = new ArrayList<>();
+        tempCandidates = new ArrayList<>();
         winners = new ArrayList<>();
     }
 

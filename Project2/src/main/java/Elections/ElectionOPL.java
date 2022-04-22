@@ -40,43 +40,63 @@ public class ElectionOPL extends Election
     @Override
     public boolean readInputs()
     {
-        if (fileHandler.inputFileExists())
+        int currentFilenameNumber = 1;
+        int numFilenames = fileHandler.getNumFilenames();
+
+        //loop until all filenames are expended or until a file fails to open
+        while (fileHandler.nextInputFile())
         {
             String electionType = fileHandler.nextLine();
             if (electionType.equals("OPL"))
             {
                 numCandidates = fileHandler.nextInt();
-                numSeats = fileHandler.nextInt();
+
+                int tempNumSeats = fileHandler.nextInt();
+
+                if (numSeats != -1 && tempNumSeats != numSeats)
+                {
+                    System.out.println("Read a number of seats which did not match up with other files in file #" + currentFilenameNumber);
+                    return false;
+                }
                 numBallots = fileHandler.nextInt();
 
                 String rawCandidates = fileHandler.nextLine();
 
                 if (!getCandidatesFromLine(rawCandidates))
                 {
-                    System.out.println("Error while trying to read Candidates");
+                    System.out.println("Error while trying to read Candidates in file #" + currentFilenameNumber);
+                    return false;
+                }
+                else if (!tempCandidates.equals(candidates))
+                {
+                    System.out.println("File #" + currentFilenameNumber + " had different candidates than the previous file");
                     return false;
                 }
 
                 if (!readBallots())
                 {
-                    System.out.println("Error while trying to read ballots");
+                    System.out.println("Error while trying to read ballots from file #" + currentFilenameNumber);
                     return false;
                 }
 
-                //successful read!
-                return true;
+                //successfully read the file
+                currentFilenameNumber++;
             }
             else
             {
-                System.out.println("First line of input file does not match election type.");
+                System.out.println("First line of file #" + currentFilenameNumber + "  does not match election type.");
                 return false;
             }
         }
-        else
+        //if not all files were opened
+        if (currentFilenameNumber != numFilenames + 1)
         {
-            System.out.println("Input file does not exist.");
+            System.out.println("Failed to open file #" + currentFilenameNumber);
             return false;
         }
+
+        //successful read
+        return true;
     }
 
     /**
@@ -114,7 +134,7 @@ public class ElectionOPL extends Election
             String partyName = candidates_arr[i + 1].substring(0, candidates_arr[i + 1].length() - 1);
 
             //adds a candidate with the provided information to the list of candidates
-            candidates.add(new CandidateOPL(candidateName, partyName));
+            tempCandidates.add(new CandidateOPL(candidateName, partyName));
 
             //set the party's number of votes to zero
             parties.put(partyName, 0);
@@ -349,7 +369,7 @@ public class ElectionOPL extends Election
             //add those tied parties to the list in a random order
             for (int i = tiedParties.size() - 1; i > -1; i--)
             {
-                String randParty = tiedParties.get((int)(ElectionIRV.fairRandom() * tiedParties.size()));
+                String randParty = tiedParties.get((int) (ElectionIRV.fairRandom() * tiedParties.size()));
                 partyNamesSorted.add(randParty);
                 tiedParties.remove(randParty);
             }
