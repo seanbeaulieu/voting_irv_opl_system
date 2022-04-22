@@ -37,6 +37,8 @@ public class Main
     private static boolean generatereportAvailable = false;
     private static boolean displaywinnersAvailable = false;
 
+    private static boolean testMultIRV = true;
+
     /**
      * Used to start the program
      *
@@ -52,6 +54,16 @@ public class Main
         {
             System.out.println("Awaiting Input.");
             String input = scanner.nextLine().toLowerCase();
+
+            // test multiple IRV command
+//            if(testMultIRV && input.equals("multirv"))
+//            {
+//                System.out.println("Running multiple IRV files for testing.");
+//                addFileName("multipleIRV1");
+//                addFileName("multipleIRV2");
+//                addFileName("multipleIRV3");
+//                runIRV();
+//            }
 
             //filename command
             if (filenameAvailable && input.equals("filename"))

@@ -62,52 +62,64 @@ public class ElectionIRV extends Election
             {
                 // check if the number of candidates is the same across files
                 int tempNumCandidates = fileHandler.nextInt();
+                // Candidates are not the same, send error message to user
                 if (numCandidates != -1 && tempNumCandidates != numCandidates)
                 {
                     System.out.println("Error: The number of candidates in file number " + (currentFilenameNumber) +
                             " is not consistent with the previous file's number of candidates.");
                     return false;
                 }
+                // if it's the first file or the candidates are the same, record candidates
                 else{
                     numCandidates = tempNumCandidates;
                 }
 
                 // check if the number of seats is the same across files
                 int tempNumSeats = fileHandler.nextInt();
+                // if the number of seats is not the same, send error message to user
                 if (numSeats != -1 && tempNumSeats != numSeats)
                 {
                     System.out.println("Error: The number of seats in file number " + (currentFilenameNumber) +
                             " is not consistent with the previous file's number of seats.");
                     return false;
                 }
+                // if it's the first file or the candidates are the same, record candidates
                 else{
                     numSeats = tempNumSeats;
                 }
 
-                numBallots = fileHandler.nextInt();
+                // record number of ballots, which can be different across multiple files
+                int partialBallots = fileHandler.nextInt();
+                numBallots += partialBallots;
 
+                // record the line containing the candidates and parties
                 String rawCandidates = fileHandler.nextLine();
 
-                //read candidates
+                // parse candidates from the raw line
+                // if parsing fails, send error message
                 if (!getCandidatesFromIRVLine(rawCandidates))
                 {
                     System.out.println("Error while trying to read Candidates in file number " + (currentFilenameNumber));
                     return false;
                 }
-                else if (!tempCandidates.equals(candidates) && candidates.size() != 0)
+                //
+                else if (!candidates.equals(tempCandidates) && candidates.size() != 0)
                 {
                     System.out.println("Error: The candidates in file number " + (currentFilenameNumber) +
                             " is not consistent with the previous file's candidates.");
                     return false;
                 }
-                else
+                else if (candidates.size() == 0)
                 {
-                    Collections.copy(tempCandidates, candidates);
+                    candidates.addAll(tempCandidates);
+                    tempCandidates.clear();
+                }
+                else{
                     tempCandidates.clear();
                 }
 
                 //read ballots
-                if (!readBallots())
+                if (!readBallots(partialBallots))
                 {
                     System.out.println("Error while trying to read ballots in file number " + (currentFilenameNumber));
                     return false;
@@ -183,10 +195,10 @@ public class ElectionIRV extends Election
      *
      * @return true if successful, false if there is an error
      */
-    private boolean readBallots()
+    private boolean readBallots(int partialBallots)
     {
         // read each line
-        for (int i = 0; i < numBallots; i++)
+        for (int i = 0; i < partialBallots; i++)
         {
             // Read in a ballot, and populate an array with the choices.
             String rawBallot = fileHandler.nextLine();

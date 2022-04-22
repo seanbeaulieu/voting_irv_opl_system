@@ -53,4 +53,20 @@ public class CandidateIRV extends Candidate
     {
         return ballots.size();
     }
+
+    /**
+     * Checks whether this CandidateIRV has the same name as the supplied CandidateIRV
+     *
+     * @param other
+     * @return true if the candidates are equal to all the other candidates, false if not
+     */
+    public boolean equals(Object other) {
+        if (other instanceof CandidateIRV){
+            return this.getName().equals(((CandidateIRV) other).getName());
+        }
+        else{
+            return false;
+        }
+    }
+
 }
