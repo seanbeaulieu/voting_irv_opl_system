@@ -43,6 +43,7 @@ public class ElectionIRV extends Election
 
     /**
      * Reads all the information (candidates, ballots, etc) from the supplied input file into this ElectionIRV object
+     *
      * @return a boolean - true if ran successfully, false if errors were encountered
      */
     @Override
@@ -51,82 +52,94 @@ public class ElectionIRV extends Election
         int currentFilenameNumber = 1;
         int numFiles = fileHandler.getNumFilenames();
         // check if the next filename exists
-        while(fileHandler.nextInputFile())
+        while (fileHandler.nextInputFile())
         {
 //            if (fileHandler.inputFileExists()) {
-                String electionType = fileHandler.nextLine();
+            String electionType = fileHandler.nextLine();
 
-                //check first line election type
-                if (electionType.equals("IRV")) {
-                    // check if the number of candidates is the same across files
-                    int tempNumCandidates = fileHandler.nextInt();
-                    if(tempNumCandidates != -1 && tempNumCandidates != numSeats){
-                        System.out.println("Error: The number of candidates in file number " + (currentFilenameNumber) +
-                                " is not consistent with the previous file's number of candidates.");
-                        return false;
-                    }
-
-                    // check if the number of seats is the same across files
-                    int tempNumSeats = fileHandler.nextInt();
-                    if(numSeats != -1 && tempNumSeats != numSeats){
-                        System.out.println("Error: The number of seats in file number " + (currentFilenameNumber) +
-                                " is not consistent with the previous file's number of seats.");
-                        return false;
-                    }
-
-                    numBallots = fileHandler.nextInt();
-
-                    String rawCandidates = fileHandler.nextLine();
-
-                    //read candidates
-                    if (!getCandidatesFromIRVLine(rawCandidates)) {
-                        System.out.println("Error while trying to read Candidates in file number " + (currentFilenameNumber));
-                        return false;
-                    }
-                    else if(!tempCandidates.equals(candidates)){
-                        System.out.println("Error: The candidates in file number " + (currentFilenameNumber) +
-                                " is not consistent with the previous file's candidates.");
-                        return false;
-                    }
-
-                    //read ballots
-                    if (!readBallots()) {
-                        System.out.println("Error while trying to read ballots in file number " + (currentFilenameNumber));
-                        return false;
-                    }
-
-                    //shuffle ballots if shuffle is on
-                    if (shuffle) {
-                        fileHandler.auditLog("Shuffling Ballots");
-                        Collections.shuffle(unassignedBallots);
-
-                        fileHandler.auditLog("New Ballot Order:");
-                        for (BallotIRV ballot : unassignedBallots) {
-                            fileHandler.auditLog("#" + ballot.getId());
-                        }
-                    }
-
-                    //don't shuffle if shuffle is off
-                    else {
-                        fileHandler.auditLog("Not Shuffling Ballots");
-                    }
-
-                    //successful read! increment file numbers
-                    return true;
-
-                } else {
-                    System.out.println("First line of input file " + (currentFilenameNumber) +
-                            " does not match election type.");
+            //check first line election type
+            if (electionType.equals("IRV"))
+            {
+                // check if the number of candidates is the same across files
+                int tempNumCandidates = fileHandler.nextInt();
+                if (numCandidates != -1 && tempNumCandidates != numSeats)
+                {
+                    System.out.println("Error: The number of candidates in file number " + (currentFilenameNumber) +
+                            " is not consistent with the previous file's number of candidates.");
                     return false;
                 }
+
+                // check if the number of seats is the same across files
+                int tempNumSeats = fileHandler.nextInt();
+                if (numSeats != -1 && tempNumSeats != numSeats)
+                {
+                    System.out.println("Error: The number of seats in file number " + (currentFilenameNumber) +
+                            " is not consistent with the previous file's number of seats.");
+                    return false;
+                }
+
+                numBallots = fileHandler.nextInt();
+
+                String rawCandidates = fileHandler.nextLine();
+
+                //read candidates
+                if (!getCandidatesFromIRVLine(rawCandidates))
+                {
+                    System.out.println("Error while trying to read Candidates in file number " + (currentFilenameNumber));
+                    return false;
+                }
+                else if (!tempCandidates.equals(candidates))
+                {
+                    System.out.println("Error: The candidates in file number " + (currentFilenameNumber) +
+                            " is not consistent with the previous file's candidates.");
+                    return false;
+                }
+
+                //read ballots
+                if (!readBallots())
+                {
+                    System.out.println("Error while trying to read ballots in file number " + (currentFilenameNumber));
+                    return false;
+                }
+
+                //shuffle ballots if shuffle is on
+                if (shuffle)
+                {
+                    fileHandler.auditLog("Shuffling Ballots");
+                    Collections.shuffle(unassignedBallots);
+
+                    fileHandler.auditLog("New Ballot Order:");
+                    for (BallotIRV ballot : unassignedBallots)
+                    {
+                        fileHandler.auditLog("#" + ballot.getId());
+                    }
+                }
+
+                //don't shuffle if shuffle is off
+                else
+                {
+                    fileHandler.auditLog("Not Shuffling Ballots");
+                }
+
+                //successful read! increment file numbers
+                currentFilenameNumber++;
+
             }
+            else
+            {
+                System.out.println("First line of input file " + (currentFilenameNumber) +
+                        " does not match election type.");
+                return false;
+            }
+        }
 //            else {
 //                System.out.println("Input file " + (i) + "does not exist.");
 //                return false;
 //            }
 //        }
         // check if the number of files expected is equal to the number of files read.
-        if(numFiles != (currentFilenameNumber - 1)){
+        if (numFiles != (currentFilenameNumber - 1))
+        {
             System.out.println("File number " + currentFilenameNumber + " failed to open.");
             return false;
         }
@@ -403,6 +416,7 @@ public class ElectionIRV extends Election
     /**
      * gets the next valid candidate from the supplied ballot
      * (a candidate is valid if they have neither won nor lost)
+     *
      * @param ballot a ballot to read the next candidate of
      * @return a CandidateIRV representing this ballot's next candidate
      */
@@ -412,7 +426,7 @@ public class ElectionIRV extends Election
         Candidate next = ballot.nextCandidate();
 
         //ignore all non-null candidates who have already won/lost
-        while(next != null && !candidates.contains(next))
+        while (next != null && !candidates.contains(next))
         {
             fileHandler.auditLog("The next candidate on ballot #" + ballot.getId() + " is " + next.getName() + " but " + next.getName() + " has already won/lost. Moving on to the next candidate on the ballot.");
             next = ballot.nextCandidate();
