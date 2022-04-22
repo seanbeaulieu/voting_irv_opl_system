@@ -1,7 +1,6 @@
 IRV
 4
 3
-2
+1
 Rosen(D),Kleinberg(R),Chou(I),Royce(L)
-,,1,2
 ,,,1

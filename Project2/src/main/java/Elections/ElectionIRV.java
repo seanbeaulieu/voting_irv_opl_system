@@ -125,25 +125,6 @@ public class ElectionIRV extends Election
                     return false;
                 }
 
-                //shuffle ballots if shuffle is on
-                if (shuffle)
-                {
-                    fileHandler.auditLog("Shuffling Ballots");
-                    Collections.shuffle(unassignedBallots);
-
-                    fileHandler.auditLog("New Ballot Order:");
-                    for (BallotIRV ballot : unassignedBallots)
-                    {
-                        fileHandler.auditLog("#" + ballot.getId());
-                    }
-                }
-
-                //don't shuffle if shuffle is off
-                else
-                {
-                    fileHandler.auditLog("Not Shuffling Ballots");
-                }
-
                 //successful read! increment file numbers
                 currentFilenameNumber++;
 
@@ -155,11 +136,26 @@ public class ElectionIRV extends Election
                 return false;
             }
         }
-//            else {
-//                System.out.println("Input file " + (i) + "does not exist.");
-//                return false;
-//            }
-//        }
+
+        //shuffle ballots if shuffle is on
+        if (shuffle)
+        {
+            fileHandler.auditLog("Shuffling Ballots");
+            Collections.shuffle(unassignedBallots);
+
+            fileHandler.auditLog("New Ballot Order:");
+            for (BallotIRV ballot : unassignedBallots)
+            {
+                fileHandler.auditLog("#" + ballot.getId());
+            }
+        }
+
+        //don't shuffle if shuffle is off
+        else
+        {
+            fileHandler.auditLog("Not Shuffling Ballots");
+        }
+
         // check if the number of files expected is equal to the number of files read.
         if (numFiles != (currentFilenameNumber - 1))
         {
@@ -203,14 +199,15 @@ public class ElectionIRV extends Election
             // Read in a ballot, and populate an array with the choices.
             String rawBallot = fileHandler.nextLine();
 
-            fileHandler.auditLog("Read Ballot #" + i + " (" + rawBallot + ")");
+            int ballotID = numBallots - partialBallots + i;
+            fileHandler.auditLog("Read Ballot #" + ballotID + " (" + rawBallot + ")");
 
             if (rawBallot != null)
             {
                 String[] choice_arr = rawBallot.split(",");
 
                 // Create a new ballot object. Notes on population in BallotIRV
-                unassignedBallots.add(new BallotIRV(choice_arr, candidates, i));
+                unassignedBallots.add(new BallotIRV(choice_arr, candidates, ballotID));
             }
 
             else
