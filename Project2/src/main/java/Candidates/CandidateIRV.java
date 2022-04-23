@@ -13,7 +13,12 @@ public class CandidateIRV extends Candidate
     /**
      * The list of all BallotIRV's which are currently assigned to this CandidateIRV
      */
-    ArrayList<BallotIRV> ballots;
+    private ArrayList<BallotIRV> ballots;
+
+    /**
+     * the amount of votes that this candidate had at their peak.
+     */
+    private int peakVotes;
 
     /**
      * Creates a CandidateIRV
@@ -24,6 +29,25 @@ public class CandidateIRV extends Candidate
         super(name);
 
         ballots = new ArrayList<>();
+        peakVotes = 0;
+    }
+
+    /**
+     * Sets this CandidateIRV's peak number of votes
+     * @param peak the new peak to set this candidate at
+     */
+    public void setPeakVotes(int peak)
+    {
+        peakVotes = peak;
+    }
+
+    /**
+     * Gets this CandidateIRV's peak number of votes
+     * @return an int representing the number of votes that this CandidateIRV had at their peak
+     */
+    public int getPeakVotes()
+    {
+        return  peakVotes;
     }
 
     /**

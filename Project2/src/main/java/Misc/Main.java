@@ -56,6 +56,15 @@ public class Main
             System.out.println("Awaiting Input.");
             String input = scanner.nextLine().toLowerCase();
 
+            if (input.equals("bad"))
+            {
+                addFileName("irvm1.csv");
+                addFileName("irvm2.csv");
+                addFileName("irvm3.csv");
+                runIRV();
+                generateReport();
+                exit = true;
+            }
             //addfilename command
             if (addFilenameAvailable && input.equals("addfilename"))
             {
@@ -162,13 +171,15 @@ public class Main
         ArrayList<String> filenames = fileHandler.getFilenames();
 
         //try to remove the supplied filename from FileHandler's list of filenames
-        if (filenames.remove(filename))
+        if (filenames.remove("./testing/" + filename))
         {
             //report back to the user
             System.out.println("Successfully removed " + filename + " from the list of filenames");
 
             //if there are no more filenames, make this command unavailable
             deleteFilenameAvailable = filenames.size() != 0;
+            runirvAvailable = false;
+            runoplAvailable = false;
         }
         else
         {

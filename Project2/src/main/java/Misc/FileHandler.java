@@ -127,10 +127,8 @@ public class FileHandler
      */
     public int nextInt()
     {
-        int out = input.nextInt();
-        String dump = input.nextLine();
-
-        return out;
+        String[] nextLineArgs = input.nextLine().split(",");
+        return Integer.parseInt(nextLineArgs[0]);
     }
 
     /**

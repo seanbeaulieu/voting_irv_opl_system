@@ -47,61 +47,53 @@ public class ElectionOPL extends Election
         while (fileHandler.nextInputFile())
         {
             String electionType = fileHandler.nextLine();
-            if (electionType.equals("OPL"))
+            numCandidates = fileHandler.nextInt();
+
+            int tempNumSeats = fileHandler.nextInt();
+
+            if (numSeats != -1 && tempNumSeats != numSeats)
             {
-                numCandidates = fileHandler.nextInt();
-
-                int tempNumSeats = fileHandler.nextInt();
-
-                if (numSeats != -1 && tempNumSeats != numSeats)
-                {
-                    System.out.println("Read a number of seats which did not match up with other files in file #" + currentFilenameNumber);
-                    return false;
-                }
-                else
-                {
-                    numSeats = tempNumSeats;
-                }
-
-                int partialBallots = fileHandler.nextInt();
-                numBallots += partialBallots;
-
-                String rawCandidates = fileHandler.nextLine();
-
-                if (!getCandidatesFromLine(rawCandidates))
-                {
-                    System.out.println("Error while trying to read Candidates in file #" + currentFilenameNumber);
-                    return false;
-                }
-                else if (!tempCandidates.equals(candidates) && candidates.size() != 0)
-                {
-                    System.out.println("File #" + currentFilenameNumber + " had different candidates than the previous file");
-                    return false;
-                }
-                else if (candidates.size() == 0)
-                {
-                    candidates.addAll(tempCandidates);
-                    tempCandidates.clear();
-                }
-                else
-                {
-                    tempCandidates.clear();
-                }
-
-                if (!readBallots(partialBallots))
-                {
-                    System.out.println("Error while trying to read ballots from file #" + currentFilenameNumber);
-                    return false;
-                }
-
-                //successfully read the file
-                currentFilenameNumber++;
+                System.out.println("Read a number of seats which did not match up with other files in file #" + currentFilenameNumber);
+                return false;
             }
             else
             {
-                System.out.println("First line of file #" + currentFilenameNumber + "  does not match election type.");
+                numSeats = tempNumSeats;
+            }
+
+            int partialBallots = fileHandler.nextInt();
+            numBallots += partialBallots;
+
+            String rawCandidates = fileHandler.nextLine();
+
+            if (!getCandidatesFromLine(rawCandidates))
+            {
+                System.out.println("Error while trying to read Candidates in file #" + currentFilenameNumber);
                 return false;
             }
+            else if (!tempCandidates.equals(candidates) && candidates.size() != 0)
+            {
+                System.out.println("File #" + currentFilenameNumber + " had different candidates than the previous file");
+                return false;
+            }
+            else if (candidates.size() == 0)
+            {
+                candidates.addAll(tempCandidates);
+                tempCandidates.clear();
+            }
+            else
+            {
+                tempCandidates.clear();
+            }
+
+            if (!readBallots(partialBallots))
+            {
+                System.out.println("Error while trying to read ballots from file #" + currentFilenameNumber);
+                return false;
+            }
+
+            //successfully read the file
+            currentFilenameNumber++;
         }
         //if not all files were opened
         if (currentFilenameNumber != numFilenames + 1)
@@ -143,10 +135,10 @@ public class ElectionOPL extends Election
         for (int i = 0; i < candidates_arr.length; i += 2)
         {
             //gets a candidate's name
-            String candidateName = candidates_arr[i].substring(1);
+            String candidateName = candidates_arr[i].substring(2);
 
             //gets a candidate's party
-            String partyName = candidates_arr[i + 1].substring(0, candidates_arr[i + 1].length() - 1);
+            String partyName = candidates_arr[i + 1].substring(0, candidates_arr[i + 1].length() - 2);
 
             //adds a candidate with the provided information to the list of candidates
             tempCandidates.add(new CandidateOPL(candidateName, partyName));
@@ -404,13 +396,15 @@ public class ElectionOPL extends Election
      */
     public void generateReport()
     {
-        //calculate how many seats each party has won
+        //calculate how many seats/votes each party has won
         HashMap<String, Integer> partySeatsWon = new HashMap<>();
+        HashMap<String, Integer> partyVotes = new HashMap<>();
 
         //initialize each party to zero seats
         for (String partyName : parties.keySet())
         {
             partySeatsWon.put(partyName, 0);
+            partyVotes.put(partyName, 0);
         }
 
         //count how many seats each party has won
@@ -420,13 +414,25 @@ public class ElectionOPL extends Election
             partySeatsWon.put(partyName, partySeatsWon.get(partyName) + 1);
         }
 
+        //create a list with all winners and losers
+        ArrayList<Candidate> all = new ArrayList<>();
+        all.addAll(winners);
+        all.addAll(candidates);
+
+        //count how many total votes each party received
+        for (Candidate candidate : all)
+        {
+            String partyName = ((CandidateOPL) candidate).getParty();
+            partyVotes.put(partyName, partyVotes.get(partyName) + candidate.getNumVotes());
+        }
+
         //log everything to the report file
         fileHandler.reportLog("Party:\tVotes:\tSeats Won:");
 
         //report party info
         for (String partyName : parties.keySet())
         {
-            fileHandler.reportLog(partyName + "\t" + parties.get(partyName) + "\t" + partySeatsWon.get(partyName));
+            fileHandler.reportLog(partyName + "\t" + partyVotes.get(partyName) + "\t" + partySeatsWon.get(partyName));
         }
 
         //report individual candidate info
