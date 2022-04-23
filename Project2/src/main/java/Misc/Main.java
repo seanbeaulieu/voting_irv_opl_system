@@ -56,15 +56,6 @@ public class Main
             System.out.println("Awaiting Input.");
             String input = scanner.nextLine().toLowerCase();
 
-            if (input.equals("bad"))
-            {
-                addFileName("irvm1.csv");
-                addFileName("irvm2.csv");
-                addFileName("irvm3.csv");
-                runIRV();
-                generateReport();
-                exit = true;
-            }
             //addfilename command
             if (addFilenameAvailable && input.equals("addfilename"))
             {
