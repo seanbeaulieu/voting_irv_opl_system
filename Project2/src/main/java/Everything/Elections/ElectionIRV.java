@@ -115,7 +115,7 @@ public class ElectionIRV extends Election
      * @param line a string representation of candidates
      * @return true if this succeeded, false otherwise
      */
-    private boolean getCandidatesFromIRVLine(String line)
+    public boolean getCandidatesFromIRVLine(String line)
     {
         // split the raw input line into an array of candidates names
         String[] candidates_arr = line.split(",");

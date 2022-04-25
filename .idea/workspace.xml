@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="39f5e0cc-f633-4e66-ac01-99c4db25ed1b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Project2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project2/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/src/main/java/Everything/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project2/src/main/java/Everything/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Candidates/Candidate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Candidates/CandidateIRV.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Candidates/CandidateOPL.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Elections/Election.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Elections/ElectionIRV.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Elections/ElectionOPL.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Misc/BallotIRV.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Misc/FileHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Misc/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/test-classes/Elections/ElectionIRVTest$getNextCandidate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/test-classes/Elections/ElectionIRVTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/test-classes/Misc/BallotIRVTest$nextCandidate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/test-classes/Misc/BallotIRVTest$testToString.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/test-classes/Misc/BallotIRVTest.class" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Project2/src/test/java/Everything/Candidate/CandidateIRVTest.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Project2/src/main/java/Everything/Main.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="26zExo0yIDQ9ug8Xhi5yLn1q8AJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Project2" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="39f5e0cc-f633-4e66-ac01-99c4db25ed1b" name="Changes" comment="" />
+      <created>1648418267307</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1648418267307</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
