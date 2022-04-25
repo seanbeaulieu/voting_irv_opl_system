@@ -24,7 +24,7 @@ public class ElectionIRV extends Election
     /**
      * The list of BallotIRVs which are not assigned to any CandidateIRV
      */
-    private ArrayList<BallotIRV> unassignedBallots;
+    public ArrayList<BallotIRV> unassignedBallots;
 
     /**
      * Creates an ElectionIRV with the provided fileHandler

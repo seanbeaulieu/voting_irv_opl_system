@@ -30,10 +30,11 @@ class ElectionOPLTest {
 
     @Test
     void calcResults() {
+
     }
 
     @Test
     void generateReport() {
     }
-    
+
 }

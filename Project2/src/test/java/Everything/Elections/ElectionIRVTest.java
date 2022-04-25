@@ -18,14 +18,55 @@ class ElectionIRVTest
 {
 
     @Test
+    @DisplayName("Test ElectionIRV.readInputs()")
     void readInputs()
     {
+
+        FileHandler fileHandler = new FileHandler("./testing/irvtest.txt");
+        ElectionIRV electionIRV = new ElectionIRV(fileHandler,true);
+        assertTrue(electionIRV.readInputs());
 
     }
 
     @Test
     void calcResults()
     {
+
+        FileHandler fileHandler = new FileHandler("./testing/irvtest.txt");
+        ElectionIRV electionIRV = new ElectionIRV(fileHandler,true);
+
+        CandidateIRV rosen = new CandidateIRV("Rosen(D)");
+        CandidateIRV klein = new CandidateIRV("Kleinberg(R)");
+        CandidateIRV chou = new CandidateIRV("Chou(I)");
+        CandidateIRV royce = new CandidateIRV("Royce(L)");
+
+        electionIRV.candidates.add(rosen);
+        electionIRV.candidates.add(klein);
+        electionIRV.candidates.add(chou);
+        electionIRV.candidates.add(royce);
+
+        BallotIRV ballot1 = new BallotIRV(new String[]{"1", "3", "4", "2"}, electionIRV.candidates, 0);
+        BallotIRV ballot2 = new BallotIRV(new String[]{"1", "", "2", ""}, electionIRV.candidates, 1);
+        BallotIRV ballot3 = new BallotIRV(new String[]{"1", "2", "3", ""}, electionIRV.candidates, 2);
+        BallotIRV ballot4 = new BallotIRV(new String[]{"3", "2", "1", "4"}, electionIRV.candidates, 3);
+        BallotIRV ballot5 = new BallotIRV(new String[]{"", "", "1", "2"}, electionIRV.candidates, 4);
+        BallotIRV ballot6 = new BallotIRV(new String[]{"", "", "", "1"}, electionIRV.candidates, 5);
+
+        electionIRV.unassignedBallots.add(ballot1);
+        electionIRV.unassignedBallots.add(ballot2);
+        electionIRV.unassignedBallots.add(ballot3);
+        electionIRV.unassignedBallots.add(ballot4);
+        electionIRV.unassignedBallots.add(ballot5);
+        electionIRV.unassignedBallots.add(ballot6);
+
+        electionIRV.calcResults();
+
+        final ArrayList<CandidateIRV> candidates = new ArrayList<>();
+        candidates.add(rosen);
+
+        assertEquals(rosen, electionIRV.winners);
+
+
     }
 
     @Test
