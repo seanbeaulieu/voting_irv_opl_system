@@ -47,13 +47,13 @@ class ElectionIRVTest
     {
     }
 
-    @Nested
+    @Test
     @DisplayName("Test ElectionIRV.getLowestCandidate()")
-    class getLowest {
+    void getLowest() {
 
-        private CandidateIRV rosen = new CandidateIRV("Rosen(D)");
-        private CandidateIRV klein = new CandidateIRV("Kleinberg(R)");
-        private CandidateIRV chou = new CandidateIRV("Chou(I)");
+        CandidateIRV rosen = new CandidateIRV("Rosen(D)");
+        CandidateIRV klein = new CandidateIRV("Kleinberg(R)");
+        CandidateIRV chou = new CandidateIRV("Chou(I)");
 
         FileHandler fileHandler = new FileHandler("./testing/irvtest.txt");
         ElectionIRV election = new ElectionIRV(fileHandler, false);

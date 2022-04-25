@@ -14,15 +14,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ElectionOPLTest {
 
-    FileHandler fileHandler = new FileHandler("./testing/opltest.txt");
+    FileHandler fileHandler = new FileHandler("./testing/ElectionOPLTestFile.txt");
     FileHandler fileHandlerIRV = new FileHandler("./testing/irvtest.txt");
     @Test
-    void testReadInputs() {
+    @DisplayName("Test ElectionOPL.readInputs()")
+    void readInputs() {
 
         ElectionOPL electionOPL = new ElectionOPL(fileHandler,true);
         assertTrue(electionOPL.readInputs());
+
         ElectionOPL badelectionOPL = new ElectionOPL(fileHandlerIRV, true);
         assertFalse(badelectionOPL.readInputs());
+
     }
 
     @Test
@@ -32,16 +35,5 @@ class ElectionOPLTest {
     @Test
     void generateReport() {
     }
-
-//    @Test
-//    void testReadInputs() {
-//    }
-
-    @Test
-    void testCalcResults() {
-    }
-
-    @Test
-    void testGenerateReport() {
-    }
+    
 }

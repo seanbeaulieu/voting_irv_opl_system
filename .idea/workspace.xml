@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="39f5e0cc-f633-4e66-ac01-99c4db25ed1b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Project2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Project2/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/src/main/java/Everything/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project2/src/main/java/Everything/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Candidates/Candidate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Candidates/CandidateIRV.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Candidates/CandidateOPL.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Elections/Election.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Elections/ElectionIRV.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Elections/ElectionOPL.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Misc/BallotIRV.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Misc/FileHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/classes/Misc/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/test-classes/Elections/ElectionIRVTest$getNextCandidate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/test-classes/Elections/ElectionIRVTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/test-classes/Misc/BallotIRVTest$nextCandidate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/test-classes/Misc/BallotIRVTest$testToString.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project2/target/test-classes/Misc/BallotIRVTest.class" beforeDir="false" />
-    </list>
+    <list default="true" id="39f5e0cc-f633-4e66-ac01-99c4db25ed1b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
