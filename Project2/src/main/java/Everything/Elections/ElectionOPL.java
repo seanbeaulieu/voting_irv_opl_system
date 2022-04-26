@@ -33,49 +33,77 @@ public class ElectionOPL extends Election
     }
 
     /**
-     * Reads all the information (candidates, ballots, etc) from the supplied input file into this ElectionIRV object
+     * Reads all the information (candidates, ballots, parties, etc) from the supplied input file into this ElectionOPL object
+     *
      * @return a boolean - true if ran successfully, false if errors were encountered
      */
     @Override
     public boolean readInputs()
     {
-        if (fileHandler.inputFileExists())
+        int currentFilenameNumber = 1;
+        int numFilenames = fileHandler.getNumFilenames();
+
+        //loop until all filenames are expended or until a file fails to open
+        while (fileHandler.nextInputFile())
         {
             String electionType = fileHandler.nextLine();
-            if (electionType.equals("OPL"))
+            numCandidates = fileHandler.nextInt();
+
+            int tempNumSeats = fileHandler.nextInt();
+
+            if (numSeats != -1 && tempNumSeats != numSeats)
             {
-                numCandidates = fileHandler.nextInt();
-                numSeats = fileHandler.nextInt();
-                numBallots = fileHandler.nextInt();
-
-                String rawCandidates = fileHandler.nextLine();
-
-                if (!getCandidatesFromLine(rawCandidates))
-                {
-                    System.out.println("Error while trying to read Candidates");
-                    return false;
-                }
-
-                if (!readBallots())
-                {
-                    System.out.println("Error while trying to read ballots");
-                    return false;
-                }
-
-                //successful read!
-                return true;
+                System.out.println("Read a number of seats which did not match up with other files in file #" + currentFilenameNumber);
+                return false;
             }
             else
             {
-                System.out.println("First line of input file does not match election type.");
+                numSeats = tempNumSeats;
+            }
+
+            int partialBallots = fileHandler.nextInt();
+            numBallots += partialBallots;
+
+            String rawCandidates = fileHandler.nextLine();
+
+            if (!getCandidatesFromLine(rawCandidates))
+            {
+                System.out.println("Error while trying to read Candidates in file #" + currentFilenameNumber);
                 return false;
             }
+            else if (!tempCandidates.equals(candidates) && candidates.size() != 0)
+            {
+                System.out.println("File #" + currentFilenameNumber + " had different candidates than the previous file");
+                return false;
+            }
+            else if (candidates.size() == 0)
+            {
+                candidates.addAll(tempCandidates);
+                tempCandidates.clear();
+            }
+            else
+            {
+                tempCandidates.clear();
+            }
+
+            if (!readBallots(partialBallots))
+            {
+                System.out.println("Error while trying to read ballots from file #" + currentFilenameNumber);
+                return false;
+            }
+
+            //successfully read the file
+            currentFilenameNumber++;
         }
-        else
+        //if not all files were opened
+        if (currentFilenameNumber != numFilenames + 1)
         {
-            System.out.println("Input file does not exist.");
+            System.out.println("Failed to open file #" + currentFilenameNumber);
             return false;
         }
+
+        //successful read
+        return true;
     }
 
     /**
@@ -107,16 +135,20 @@ public class ElectionOPL extends Election
         for (int i = 0; i < candidates_arr.length; i += 2)
         {
             //gets a candidate's name
-            String candidateName = candidates_arr[i].substring(1);
+            String candidateName = candidates_arr[i].substring(2);
 
             //gets a candidate's party
-            String partyName = candidates_arr[i + 1].substring(0, candidates_arr[i + 1].length() - 1);
+            String partyName = candidates_arr[i + 1].substring(0, candidates_arr[i + 1].length() - 2);
 
             //adds a candidate with the provided information to the list of candidates
-            candidates.add(new CandidateOPL(candidateName, partyName));
+            tempCandidates.add(new CandidateOPL(candidateName, partyName));
 
-            //set the party's number of votes to zero
-            parties.put(partyName, 0);
+            //if this party has not yet been added to the party tracker
+            if (!parties.keySet().contains(partyName))
+            {
+                //add the party to the tracker (set the party's number of votes to zero)
+                parties.put(partyName, 0);
+            }
         }
 
         //return success
@@ -126,12 +158,13 @@ public class ElectionOPL extends Election
     /**
      * Reads the ballots in from the input file
      *
+     * @param partialBallots the number of ballots to read in
      * @return true if successful and false otherwise
      */
-    private boolean readBallots()
+    private boolean readBallots(int partialBallots)
     {
         // read each line
-        for (int i = 0; i < numBallots; i++)
+        for (int i = 0; i < partialBallots; i++)
         {
             // Read in a ballot, and populate an array with the choices.
             String rawBallot = fileHandler.nextLine();
@@ -259,7 +292,7 @@ public class ElectionOPL extends Election
         while (remainingSeats > 0)
         {
             //loop through parties in descending order of remaining votes
-            for (int partyIndex = 0; partyIndex < sortedPartyNames.size(); partyIndex++)
+            for (int partyIndex = 0; partyIndex < sortedPartyNames.size() && remainingSeats > 0; partyIndex++)
             {
                 //assign each seat to the next party with the most remaining votes
                 String partyName = sortedPartyNames.get(partyIndex);
@@ -273,16 +306,16 @@ public class ElectionOPL extends Election
                     //sort the Candidates into decreasing order by number of votes
                     remainingCandidates.sort(Collections.reverseOrder());
 
-                    //get the Candidates.Candidate with the most votes (within this party)
+                    //get the Candidate with the most votes (within this party)
                     Candidate winner = remainingCandidates.get(0);
 
-                    //add that Candidates.Candidate to the list of winners
+                    //add that Candidate to the list of winners
                     winners.add(winner);
 
                     //remove that Candidates.Candidate from this party's list of candidates
                     remainingCandidates.remove(0);
 
-                    //remove that Candidates.Candidate from this election's list of candidates who have not won
+                    //remove that Candidate from this election's list of candidates who have not won
                     candidates.remove(winner);
 
                     //decrease the number of seats remaining
@@ -305,31 +338,57 @@ public class ElectionOPL extends Election
      */
     private ArrayList<String> getSortedPartyNames()
     {
-        ArrayList<String> sortedPartyNames = new ArrayList<>();
+        ArrayList<String> partyNamesSorted = new ArrayList<>();
+        ArrayList<String> partyNames = new ArrayList<>(parties.keySet());
 
-        //sort all party names into the list
+        ArrayList<Integer> partyVoteScores = new ArrayList<>();
+        ArrayList<Integer> partyVoteScoresSorted = new ArrayList<>();
+
         for (String partyName : parties.keySet())
         {
-            int partyVal = parties.get(partyName);
-
-            int bigLocation = 0;
-            int bigVal = -1;
-
-            for (int lcv = 0; lcv < sortedPartyNames.size(); lcv++)
-            {
-                int newVal = parties.get(sortedPartyNames.get(lcv));
-
-                if (partyVal > bigVal)
-                {
-                    bigLocation = lcv;
-                    bigVal = newVal;
-                }
-            }
-
-            sortedPartyNames.add(bigLocation + 1, partyName);
+            partyVoteScores.add(parties.get(partyName));
+            partyVoteScoresSorted.add(parties.get(partyName));
         }
 
-        return sortedPartyNames;
+        Collections.sort(partyVoteScoresSorted);
+
+        //loop through all the scores in sorted order
+        for (int lcv = partyVoteScores.size() - 1; lcv > -1; lcv--)
+        {
+            ArrayList<String> tiedParties = new ArrayList<>();
+
+            //get all the parties which are tied for the next position
+            int score = partyVoteScoresSorted.get(lcv);
+            int nextScore = score;
+            do
+            {
+                int index = partyVoteScores.indexOf(nextScore);
+                String party = partyNames.get(index);
+                partyNames.remove(index);
+                partyVoteScores.remove(index);
+                partyVoteScoresSorted.remove(partyVoteScoresSorted.size() - 1);
+
+                tiedParties.add(party);
+
+                nextScore = lcv != 0 ? partyVoteScores.get(lcv - 1) : -1;
+                if (nextScore == score)
+                {
+                    lcv--;
+                }
+            }
+            while (nextScore == score);
+
+            //add those tied parties to the list in a random order
+            for (int i = tiedParties.size() - 1; i > -1; i--)
+            {
+                String randParty = tiedParties.get((int) (ElectionIRV.fairRandom() * tiedParties.size()));
+                partyNamesSorted.add(randParty);
+                tiedParties.remove(randParty);
+            }
+        }
+
+
+        return partyNamesSorted;
     }
 
     /**
@@ -337,13 +396,15 @@ public class ElectionOPL extends Election
      */
     public void generateReport()
     {
-        //calculate how many seats each party has won
+        //calculate how many seats/votes each party has won
         HashMap<String, Integer> partySeatsWon = new HashMap<>();
+        HashMap<String, Integer> partyVotes = new HashMap<>();
 
         //initialize each party to zero seats
         for (String partyName : parties.keySet())
         {
             partySeatsWon.put(partyName, 0);
+            partyVotes.put(partyName, 0);
         }
 
         //count how many seats each party has won
@@ -353,13 +414,25 @@ public class ElectionOPL extends Election
             partySeatsWon.put(partyName, partySeatsWon.get(partyName) + 1);
         }
 
+        //create a list with all winners and losers
+        ArrayList<Candidate> all = new ArrayList<>();
+        all.addAll(winners);
+        all.addAll(candidates);
+
+        //count how many total votes each party received
+        for (Candidate candidate : all)
+        {
+            String partyName = ((CandidateOPL) candidate).getParty();
+            partyVotes.put(partyName, partyVotes.get(partyName) + candidate.getNumVotes());
+        }
+
         //log everything to the report file
         fileHandler.reportLog("Party:\tVotes:\tSeats Won:");
 
         //report party info
         for (String partyName : parties.keySet())
         {
-            fileHandler.reportLog(partyName + "\t" + parties.get(partyName) + "\t" + partySeatsWon.get(partyName));
+            fileHandler.reportLog(partyName + "\t" + partyVotes.get(partyName) + "\t" + partySeatsWon.get(partyName));
         }
 
         //report individual candidate info

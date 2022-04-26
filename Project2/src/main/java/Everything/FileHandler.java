@@ -1,9 +1,10 @@
-package Everything;
+package Misc;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -12,6 +13,11 @@ import java.util.Scanner;
  */
 public class FileHandler
 {
+    /**
+     * The list of all filenames which have been supplied by the user
+     */
+    private ArrayList<String> filenames;
+
     /**
      * Where stuff will be read from
      */
@@ -34,31 +40,17 @@ public class FileHandler
     private boolean inputFileExists;
 
     /**
-     * holds the contents of the audit file (useful for testing, this does not actually go out to the user)
-     * everything that is logged to the audit file is also logged to this string
+     * creates a default FileHandler which has no files to draw input from.
      */
-    private String auditFileContent;
-
-    /**
-     * holds the contents of the report file (useful for testing, this does not actually go out to the user)
-     * everything that is logged to the report file is also logged to this string
-     */
-    private String reportFileContent;
-
-    /**
-     * creates a file handler which draws from the supplied input file
-     *
-     * @param inputFile the file to draw
-     */
-    public FileHandler(String inputFile)
+    public FileHandler()
     {
-        setInputFile(inputFile);
+        filenames = new ArrayList<>();
+        inputFileExists = false;
 
         //set up the audit file
         try
         {
             audit = new FileWriter("./testing/audit.txt");
-            auditFileContent = "";
         }
         catch (IOException e)
         {
@@ -70,7 +62,6 @@ public class FileHandler
         try
         {
             report = new FileWriter("./testing/report.txt");
-            reportFileContent = "";
         }
         catch (IOException e)
         {
@@ -91,21 +82,13 @@ public class FileHandler
     }
 
     /**
-     * tries to set the supplied inputFile
+     * blindly adds the given file to the list of filenames
      *
-     * @param inputFile the file to draw input from
+     * @param filename the filename to be added to this FileHandler's list of filenames
      */
-    public void setInputFile(String inputFile)
+    public void addFilename(String filename)
     {
-        try
-        {
-            input = new Scanner(new File(inputFile));
-            inputFileExists = true;
-        }
-        catch (FileNotFoundException e)
-        {
-            inputFileExists = false;
-        }
+        filenames.add(filename);
     }
 
     /**
@@ -144,10 +127,8 @@ public class FileHandler
      */
     public int nextInt()
     {
-        int out = input.nextInt();
-        String dump = input.nextLine();
-
-        return out;
+        String[] nextLineArgs = input.nextLine().split(",");
+        return Integer.parseInt(nextLineArgs[0]);
     }
 
     /**
@@ -193,7 +174,6 @@ public class FileHandler
         try
         {
             audit.write(log + "\n");
-            auditFileContent += log + "\n";
         }
         catch (IOException e)
         {
@@ -212,7 +192,6 @@ public class FileHandler
         try
         {
             report.write(log + "\n");
-            reportFileContent += log + "\n";
         }
         catch (IOException e)
         {
@@ -221,20 +200,62 @@ public class FileHandler
     }
 
     /**
-     * Gets the current contents of the audit file (or an estimate of what it should be based on all of the things that have been logged to the audit file)
-     * @return a String representing the current contents of the audit file.
+     * Advances the FileHandler's Scanner to the next file in the list
+     *
+     * @return true if a file was successfully opened, false otherwise
      */
-    public String getAuditFileContent()
+    public boolean nextInputFile()
     {
-        return auditFileContent;
+        //close any previously opened input file
+        if (inputFileExists)
+        {
+            input.close();
+        }
+
+        //return false if there are no more filenames
+        if (filenames.isEmpty())
+        {
+            return false;
+        }
+
+        //get the next filename
+        String nextFilename = filenames.get(0);
+        try
+        {
+            //open a new Scanner with that filename
+            input = new Scanner(new File(nextFilename));
+
+            //remove that filename from the list
+            filenames.remove(0);
+
+            inputFileExists = true;
+            //success!
+            return true;
+        }
+        catch (FileNotFoundException e)
+        {
+            //fail
+            System.out.println("Failed to open " + nextFilename);
+            return false;
+        }
     }
 
     /**
-     * Gets the current contents of the report file (or an estimate of what it should be based on all of the things that have been logged to the report file)
-     * @return a String representing the current contents of the report file.
+     * Gets the number of filenames that are currently stored in this FileHandler object
+     *
+     * @return an int equal to filenames.size()
      */
-    public String getReportFileContent()
+    public int getNumFilenames()
     {
-        return reportFileContent;
+        return filenames.size();
+    }
+
+    /**
+     * Gets a list of all filenames currently stored in this FileHandler object
+     * @return an ArrayList of Strings representing all filenames currently stored in this FileHandler object
+     */
+    public ArrayList<String> getFilenames()
+    {
+        return filenames;
     }
 }
