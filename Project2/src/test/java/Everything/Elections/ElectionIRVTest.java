@@ -33,7 +33,7 @@ class ElectionIRVTest
     {
 
         FileHandler fileHandler = new FileHandler("./testing/irvtest.txt");
-        ElectionIRV electionIRV = new ElectionIRV(fileHandler,true);
+        ElectionIRV electionIRV = new ElectionIRV(fileHandler, true);
 
         CandidateIRV rosen = new CandidateIRV("Rosen(D)");
         CandidateIRV klein = new CandidateIRV("Kleinberg(R)");
@@ -64,8 +64,7 @@ class ElectionIRVTest
         final ArrayList<CandidateIRV> candidates = new ArrayList<>();
         candidates.add(rosen);
 
-        assertEquals(rosen, electionIRV.winners);
-
+        assertEquals(candidates, electionIRV.winners);
 
     }
 
