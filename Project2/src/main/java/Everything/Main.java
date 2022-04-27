@@ -171,8 +171,8 @@ public class Main
 
             //if there are no more filenames, make this command unavailable
             deleteFilenameAvailable = filenames.size() != 0;
-            runirvAvailable = false;
-            runoplAvailable = false;
+            runirvAvailable = deleteFilenameAvailable;
+            runoplAvailable = deleteFilenameAvailable;
         }
         else
         {
