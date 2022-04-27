@@ -5,6 +5,7 @@ import Everything.Elections.Election;
 import Everything.Elections.ElectionIRV;
 import Everything.Elections.ElectionOPL;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,7 +31,8 @@ public class Main
     private static Election election;
 
     //whether or not the following commands are available to be ran
-    private static boolean filenameAvailable = true;
+    private static boolean addFilenameAvailable = true;
+    private static boolean deleteFilenameAvailable = false;
     private static boolean runoplAvailable = false;
     private static boolean runirvAvailable = false;
     private static boolean shuffleAvailable = true;
@@ -46,6 +48,7 @@ public class Main
     {
         //used for command line input
         Scanner scanner = new Scanner(System.in);
+        fileHandler = new FileHandler();
 
         //loop until program should exit
         while (!exit)
@@ -53,14 +56,24 @@ public class Main
             System.out.println("Awaiting Input.");
             String input = scanner.nextLine().toLowerCase();
 
-            //filename command
-            if (filenameAvailable && input.equals("filename"))
+            //addfilename command
+            if (addFilenameAvailable && input.equals("addfilename"))
             {
                 System.out.println("Awaiting File Name.");
                 String filename = scanner.nextLine();
                 System.out.println("'" + filename + "'");
 
-                setFileName(filename);
+                addFileName(filename);
+            }
+
+            //deletefilename command
+            else if (deleteFilenameAvailable && input.equals("deletefilename"))
+            {
+                System.out.println("Awaiting File Name.");
+                String filename = scanner.nextLine();
+                System.out.println("'" + filename + "'");
+
+                deleteFileName(filename);
             }
 
             //runopl command
@@ -122,30 +135,50 @@ public class Main
     }
 
     /**
-     * Sets the filename to be the supplied string
+     * Adds the supplied String to the list of filenames to read input from
      *
-     * @param filename the file to be set as the input file for election data
+     * @param filename a String representing the file to be added to the list of filenames to read input from
      */
-    private static void setFileName(String filename)
+    private static void addFileName(String filename)
     {
         //save the inputfile
         Main.filename = filename;
 
-        //if filehandler does not exist, create it
-        if (fileHandler == null)
-        {
-            fileHandler = new FileHandler(filename);
-        }
-
-        //otherwise just update the active fileHandler
-        else
-        {
-            fileHandler.setInputFile(filename);
-        }
+        //update the active fileHandler with the filename
+        fileHandler.addFilename("./testing/" + filename);
 
         //update which commands are available
+        deleteFilenameAvailable = true;
         runirvAvailable = true;
         runoplAvailable = true;
+    }
+
+    /**
+     * Tries to remove the given filename from the list of filenames
+     *
+     * @param filename a String representing the file to try to delete from the list of filenames
+     */
+    private static void deleteFileName(String filename)
+    {
+        //get the filenames from the filehandler
+        ArrayList<String> filenames = fileHandler.getFilenames();
+
+        //try to remove the supplied filename from FileHandler's list of filenames
+        if (filenames.remove("./testing/" + filename))
+        {
+            //report back to the user
+            System.out.println("Successfully removed " + filename + " from the list of filenames");
+
+            //if there are no more filenames, make this command unavailable
+            deleteFilenameAvailable = filenames.size() != 0;
+            runirvAvailable = false;
+            runoplAvailable = false;
+        }
+        else
+        {
+            //report back to the user
+            System.out.println("Failed to remove " + filename + " from the list of filenames");
+        }
     }
 
     /**
@@ -184,7 +217,7 @@ public class Main
 
             //update which commands are available
             shuffleAvailable = false;
-            filenameAvailable = false;
+            addFilenameAvailable = false;
             generatereportAvailable = true;
             displaywinnersAvailable = true;
         }
