@@ -22,7 +22,8 @@ class ElectionIRVTest
     void readInputs()
     {
 
-        FileHandler fileHandler = new FileHandler("./testing/irvtest.txt");
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.addFilename("irvtest.txt");
         ElectionIRV electionIRV = new ElectionIRV(fileHandler,true);
         assertTrue(electionIRV.readInputs());
 
@@ -32,7 +33,8 @@ class ElectionIRVTest
     void calcResults()
     {
 
-        FileHandler fileHandler = new FileHandler("./testing/irvtest.txt");
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.addFilename("irvtest.txt");
         ElectionIRV electionIRV = new ElectionIRV(fileHandler, true);
 
         CandidateIRV rosen = new CandidateIRV("Rosen(D)");
@@ -72,7 +74,8 @@ class ElectionIRVTest
     @DisplayName("Test ElectionIRV.getCandidatesFromIRVLine")
     void getCandidatesFromString() {
 
-        FileHandler fh = new FileHandler("irvtest.txt");
+        FileHandler fh = new FileHandler();
+        fh.addFilename("irvtest.txt");
 
         final ElectionIRV election = new ElectionIRV(fh, false);
         String candidate_line = "Rosen,Kleinberg,Chou,Royce";
@@ -95,7 +98,8 @@ class ElectionIRVTest
         CandidateIRV klein = new CandidateIRV("Kleinberg(R)");
         CandidateIRV chou = new CandidateIRV("Chou(I)");
 
-        FileHandler fileHandler = new FileHandler("./testing/irvtest.txt");
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.addFilename("irvtest.txt");
         ElectionIRV election = new ElectionIRV(fileHandler, false);
 
         election.candidates.add(rosen);
@@ -125,7 +129,8 @@ class ElectionIRVTest
         private Candidate chou = new CandidateIRV("Chou(I)");
         private Candidate royce = new CandidateIRV("Royce(L)");
 
-        FileHandler fileHandler = new FileHandler("./testing/irvtest.txt");
+        FileHandler fileHandler = new FileHandler();
+
         ElectionIRV election = new ElectionIRV(fileHandler, false);
 
         @Test
@@ -134,7 +139,7 @@ class ElectionIRVTest
         {
 
             ArrayList<Candidate> ballotCandidates = new ArrayList<>();
-
+            fileHandler.addFilename("irvtest.txt");
             ballotCandidates.add(rosen);
             ballotCandidates.add(klein);
             ballotCandidates.add(chou);

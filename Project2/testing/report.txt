@@ -1,6 +1,0 @@
-
-Candidate:	Peak Votes:	Winner/Loser:
-Rosen(D)	4	Winner
-Chou(I)	2	Winner
-Royce(L)	1	Winner
-Kleinberg(R)	0	Loser
