@@ -1,9 +1,9 @@
-package Everything.Elections;
+package Elections;
 
-import Everything.Candidates.Candidate;
-import Everything.Candidates.CandidateIRV;
-import Everything.BallotIRV;
-import Everything.FileHandler;
+import Candidates.Candidate;
+import Candidates.CandidateIRV;
+import Misc.BallotIRV;
+import Misc.FileHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,7 +24,7 @@ public class ElectionIRV extends Election
     /**
      * The list of BallotIRVs which are not assigned to any CandidateIRV
      */
-    public ArrayList<BallotIRV> unassignedBallots;
+    private ArrayList<BallotIRV> unassignedBallots;
 
     /**
      * Creates an ElectionIRV with the provided fileHandler
@@ -115,7 +115,7 @@ public class ElectionIRV extends Election
      * @param line a string representation of candidates
      * @return true if this succeeded, false otherwise
      */
-    public boolean getCandidatesFromIRVLine(String line)
+    private boolean getCandidatesFromIRVLine(String line)
     {
         // split the raw input line into an array of candidates names
         String[] candidates_arr = line.split(",");
@@ -334,7 +334,7 @@ public class ElectionIRV extends Election
      *
      * @return a randomly generated double which will not fall subject to any fake randomness (via early random calling)
      */
-    private double fairRandom()
+    public static double fairRandom()
     {
         double rand = -1;
 
