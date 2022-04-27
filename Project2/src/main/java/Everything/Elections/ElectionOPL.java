@@ -1,8 +1,8 @@
-package Elections;
+package Everything.Elections;
 
-import Candidates.Candidate;
-import Candidates.CandidateOPL;
-import Misc.FileHandler;
+import Everything.Candidates.Candidate;
+import Everything.Candidates.CandidateOPL;
+import Everything.FileHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,8 +33,7 @@ public class ElectionOPL extends Election
     }
 
     /**
-     * Reads all the information (candidates, ballots, parties, etc) from the supplied input file into this ElectionOPL object
-     *
+     * Reads all the information (candidates, ballots, etc) from the supplied input file into this ElectionIRV object
      * @return a boolean - true if ran successfully, false if errors were encountered
      */
     @Override
@@ -260,7 +259,7 @@ public class ElectionOPL extends Election
         while (remainingSeats > 0)
         {
             //loop through parties in descending order of remaining votes
-            for (int partyIndex = 0; partyIndex < sortedPartyNames.size() && remainingSeats > 0; partyIndex++)
+            for (int partyIndex = 0; partyIndex < sortedPartyNames.size(); partyIndex++)
             {
                 //assign each seat to the next party with the most remaining votes
                 String partyName = sortedPartyNames.get(partyIndex);
@@ -306,58 +305,31 @@ public class ElectionOPL extends Election
      */
     private ArrayList<String> getSortedPartyNames()
     {
-        ArrayList<String> partyNames = new ArrayList<>();
-        ArrayList<String> partyNamesSorted = new ArrayList<>();
-        partyNames.addAll(parties.keySet());
+        ArrayList<String> sortedPartyNames = new ArrayList<>();
 
-        ArrayList<Integer> partyVoteScores = new ArrayList<>();
-        ArrayList<Integer> partyVoteScoresSorted = new ArrayList<>();
-
+        //sort all party names into the list
         for (String partyName : parties.keySet())
         {
-            partyVoteScores.add(parties.get(partyName));
-            partyVoteScoresSorted.add(parties.get(partyName));
-        }
+            int partyVal = parties.get(partyName);
 
-        Collections.sort(partyVoteScoresSorted);
+            int bigLocation = 0;
+            int bigVal = -1;
 
-        //loop through all the scores in sorted order
-        for (int lcv = partyVoteScores.size() - 1; lcv > -1; lcv--)
-        {
-            ArrayList<String> tiedParties = new ArrayList<>();
-
-            //get all the parties which are tied for the next position
-            int score = partyVoteScoresSorted.get(lcv);
-            int nextScore = score;
-            do
+            for (int lcv = 0; lcv < sortedPartyNames.size(); lcv++)
             {
-                int index = partyVoteScores.indexOf(nextScore);
-                String party = partyNames.get(index);
-                partyNames.remove(index);
-                partyVoteScores.remove(index);
-                partyVoteScoresSorted.remove(partyVoteScoresSorted.size() - 1);
+                int newVal = parties.get(sortedPartyNames.get(lcv));
 
-                tiedParties.add(party);
-
-                nextScore = lcv != 0 ? partyVoteScores.get(lcv - 1) : -1;
-                if (nextScore == score)
+                if (partyVal > bigVal)
                 {
-                    lcv--;
+                    bigLocation = lcv;
+                    bigVal = newVal;
                 }
             }
-            while (nextScore == score);
 
-            //add those tied parties to the list in a random order
-            for (int i = tiedParties.size() - 1; i > -1; i--)
-            {
-                String randParty = tiedParties.get((int)(ElectionIRV.fairRandom() * tiedParties.size()));
-                partyNamesSorted.add(randParty);
-                tiedParties.remove(randParty);
-            }
+            sortedPartyNames.add(bigLocation + 1, partyName);
         }
 
-
-        return partyNamesSorted;
+        return sortedPartyNames;
     }
 
     /**
