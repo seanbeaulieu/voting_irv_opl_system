@@ -198,7 +198,17 @@ public class ElectionIRV extends Election
                 String[] choice_arr = rawBallot.split(",");
 
                 // Create a new ballot object. Notes on population in BallotIRV
-                unassignedBallots.add(new BallotIRV(choice_arr, candidates, ballotID));
+                BallotIRV ballot = new BallotIRV(choice_arr, candidates, ballotID);
+                if (ballot.isValid(candidates.size()))
+                {
+                    fileHandler.auditLog("Ballot #" + ballot.getId() + " is valid and has been added to the list of unassigned ballots.");
+                    unassignedBallots.add(ballot);
+                }
+                else
+                {
+                    fileHandler.auditLog("Ballot #" + ballot.getId() + " is invalid and will be ignored.");
+                    fileHandler.invalidBallotLog(ballot.toString());
+                }
             }
 
             else

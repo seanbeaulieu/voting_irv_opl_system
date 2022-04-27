@@ -70,6 +70,10 @@ public class BallotIRV
         return id;
     }
 
+    /**
+     * Creates a String representation of this BallotIRV.
+     * @return a String representing the information stored on this BallotIRV
+     */
     public String toString()
     {
         String out = "Ballot ID: " + id;
@@ -79,5 +83,15 @@ public class BallotIRV
         }
 
         return out;
+    }
+
+    /**
+     * Gets whether or not this ballot is valid (AKA has at least half of the candidates ranked, rounded up from .5 or above to the next higher integer value)
+     * @param numCandidates the number of candidates in this election
+     * @return true if valid, false otherwise
+     */
+    public boolean isValid(int numCandidates)
+    {
+        return candidates.size() >= numCandidates / 2.0;
     }
 }
