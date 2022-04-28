@@ -87,16 +87,38 @@ public class ElectionPO extends Election
      */
     public void calcResults()
     {
-        Candidate bigWinner = candidates.get(0);
-        for (Candidate candidate : candidates)
+        //create a list for candidates who have the most votes
+        ArrayList<Candidate> bigWinners = new ArrayList<>();
+        bigWinners.add(candidates.get(0));
+
+        //loop through all candidates (except candidate 0 who starts in the list)
+        for (int candNum = 1; candNum < candidates.size(); candNum++)
         {
-            if (candidate.getNumVotes() > bigWinner.getNumVotes())
+            //get this candidate
+            Candidate candidate = candidates.get(candNum);
+
+            //if this candidate is tied for the most votes
+            if (candidate.getNumVotes() == bigWinners.get(0).getNumVotes())
             {
-                bigWinner = candidate;
+                //add them to the list
+                bigWinners.add(candidate);
+            }
+
+            //if they have more votes than the previous candidate with the most votes
+            else if (candidate.getNumVotes() > bigWinners.get(0).getNumVotes())
+            {
+                //remove all previous candidates from the list
+                bigWinners.clear();
+
+                //add this candidate to the list
+                bigWinners.add(candidate);
             }
         }
-        winners.add(bigWinner);
-        candidates.remove(bigWinner);
+
+        //choose a random candidate from the list to win (fairly)
+        int winnerIndex = (int)(bigWinners.size() * ElectionIRV.fairRandom());
+        winners.add(bigWinners.get(winnerIndex));
+        candidates.remove(bigWinners.get(winnerIndex));
     }
 
     /**

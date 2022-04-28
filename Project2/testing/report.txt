@@ -1,0 +1,6 @@
+Pike (D)	3	Winner
+Foster (D)	2	Loser
+Deutsch (R)	0	Loser
+Borg (R)	2	Loser
+Jones (R)	1	Loser
+Smith (J)	1	Loser
