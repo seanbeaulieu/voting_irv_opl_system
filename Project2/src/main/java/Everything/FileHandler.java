@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,6 +34,11 @@ public class FileHandler
      * Where Report information will be logged
      */
     private FileWriter report;
+
+    /**
+     * Where InvalidBallot information will be logged
+     */
+    private FileWriter invalidBallot;
 
     /**
      * true if the supplied input file exists
@@ -65,20 +72,24 @@ public class FileHandler
         }
         catch (IOException e)
         {
-            System.out.println("An error occurred while setting up the audit file.");
+            System.out.println("An error occurred while setting up the report file.");
             e.printStackTrace();
         }
-    }
 
-    /**
-     * true if the supplied input file exists
-     * false otherwise
-     *
-     * @return a boolean representing whether or not the supplied input file exists
-     */
-    public boolean inputFileExists()
-    {
-        return inputFileExists;
+        //set up the invalidBallot file
+        try
+        {
+            //date code from https://www.tutorialkart.com/java/how-to-get-current-date-in-yyyy-mm-dd-format-in-java/
+            LocalDate dateObj = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+            String date = dateObj.format(formatter);
+            invalidBallot = new FileWriter("./testing/invalidated_" + date + ".txt");
+        }
+        catch (IOException e)
+        {
+            System.out.println("An error occurred while setting up the invalid ballots file.");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -161,6 +172,16 @@ public class FileHandler
         {
             System.out.println("There was an exception while closing the report file");
         }
+
+        //close invalid ballots file
+        try
+        {
+            invalidBallot.close();
+        }
+        catch (IOException e)
+        {
+            System.out.println("There was an exception while closing the invalidBallots file");
+        }
     }
 
     /**
@@ -196,6 +217,24 @@ public class FileHandler
         catch (IOException e)
         {
             System.out.println("There was an exception while writing to the report file");
+        }
+    }
+
+    /**
+     * records the provided string to the invalidBallots file
+     *
+     * @param log the string to record to the invalidBallots file
+     */
+    public void invalidBallotLog(String log)
+    {
+        //write to report file
+        try
+        {
+            invalidBallot.write(log + "\n");
+        }
+        catch (IOException e)
+        {
+            System.out.println("There was an exception while writing to the invalid ballots file");
         }
     }
 
@@ -252,6 +291,7 @@ public class FileHandler
 
     /**
      * Gets a list of all filenames currently stored in this FileHandler object
+     *
      * @return an ArrayList of Strings representing all filenames currently stored in this FileHandler object
      */
     public ArrayList<String> getFilenames()

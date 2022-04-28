@@ -4,13 +4,13 @@ import Everything.Candidates.Candidate;
 import Everything.Elections.Election;
 import Everything.Elections.ElectionIRV;
 import Everything.Elections.ElectionOPL;
+import Everything.Elections.ElectionPO;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * ex
  * Used to take input commands from the user.
  * Written by Jasper Rutherford
  */
@@ -25,9 +25,7 @@ public class Main
     //used for file input/output
     private static FileHandler fileHandler;
 
-    //where election data will be read from
-    private static String filename;
-
+    //the election
     private static Election election;
 
     //whether or not the following commands are available to be ran
@@ -35,6 +33,7 @@ public class Main
     private static boolean deleteFilenameAvailable = false;
     private static boolean runoplAvailable = false;
     private static boolean runirvAvailable = false;
+    private static boolean runpoAvailable = false;
     private static boolean shuffleAvailable = true;
     private static boolean generatereportAvailable = false;
     private static boolean displaywinnersAvailable = false;
@@ -83,13 +82,18 @@ public class Main
                 runOPL();
             }
 
-
-
             //runirv command
             else if (runirvAvailable && input.equals("runirv"))
             {
                 System.out.println("Running IRV.");
                 runIRV();
+            }
+
+            //runpo command
+            else if (runpoAvailable && input.equals("runpo"))
+            {
+                System.out.println("Running PO.");
+                runPO();
             }
 
             //shuffle command
@@ -141,9 +145,6 @@ public class Main
      */
     private static void addFileName(String filename)
     {
-        //save the inputfile
-        Main.filename = filename;
-
         //update the active fileHandler with the filename
         fileHandler.addFilename("./testing/" + filename);
 
@@ -151,6 +152,7 @@ public class Main
         deleteFilenameAvailable = true;
         runirvAvailable = true;
         runoplAvailable = true;
+        runpoAvailable = true;
     }
 
     /**
@@ -173,6 +175,7 @@ public class Main
             deleteFilenameAvailable = filenames.size() != 0;
             runirvAvailable = deleteFilenameAvailable;
             runoplAvailable = deleteFilenameAvailable;
+            runpoAvailable = deleteFilenameAvailable;
         }
         else
         {
@@ -198,6 +201,16 @@ public class Main
     {
         //creates and runs an election
         election = new ElectionIRV(fileHandler, shuffle);
+        runElection();
+    }
+
+    /**
+     * runs a PO election from the supplied input file
+     */
+    private static void runPO()
+    {
+        //creates and runs an election
+        election = new ElectionPO(fileHandler, shuffle);
         runElection();
     }
 
@@ -230,6 +243,7 @@ public class Main
             //update which commands are available
             runirvAvailable = false;
             runoplAvailable = false;
+            runpoAvailable = false;
         }
     }
 

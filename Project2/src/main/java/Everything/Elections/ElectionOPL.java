@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 /**
  * Represents an OPL based Election
- * Written by Jasper Rutherford
+ * Written by Jasper Rutherford and Shey Pemberton
  */
 public class ElectionOPL extends Election
 {
