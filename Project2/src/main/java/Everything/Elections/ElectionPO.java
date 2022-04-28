@@ -18,6 +18,7 @@ public class ElectionPO extends Election
      * Creates an ElectionPO with the given inputs
      *
      * @param fileHandler how this election will get inputs from files/send outputs to files
+     * @param shuffle whether or not to shuffle the ballots (this is ignored in this election type)
      */
     public ElectionPO(FileHandler fileHandler, boolean shuffle)
     {

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * ex
  * Used to take input commands from the user.
  * Written by Jasper Rutherford
  */
