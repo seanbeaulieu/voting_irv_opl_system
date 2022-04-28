@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="39f5e0cc-f633-4e66-ac01-99c4db25ed1b" name="Changes" comment="" />
+    <list default="true" id="39f5e0cc-f633-4e66-ac01-99c4db25ed1b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Project2/src/test/java/Everything/Elections/ElectionIRVTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project2/src/test/java/Everything/Elections/ElectionIRVTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/test-classes/Everything/Elections/ElectionIRVTest$getNextCandidate.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project2/target/test-classes/Everything/Elections/ElectionIRVTest$getNextCandidate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project2/target/test-classes/Everything/Elections/ElectionIRVTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project2/target/test-classes/Everything/Elections/ElectionIRVTest.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
