@@ -40,7 +40,6 @@ public class ElectionIRV extends Election
         unassignedBallots = new ArrayList<>();
     }
 
-
     /**
      * Reads all the information (candidates, ballots, etc) from the supplied input file into this ElectionIRV object
      *

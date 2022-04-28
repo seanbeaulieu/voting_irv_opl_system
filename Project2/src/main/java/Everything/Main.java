@@ -26,9 +26,7 @@ public class Main
     //used for file input/output
     private static FileHandler fileHandler;
 
-    //where election data will be read from
-    private static String filename;
-
+    //the election
     private static Election election;
 
     //whether or not the following commands are available to be ran
@@ -148,9 +146,6 @@ public class Main
      */
     private static void addFileName(String filename)
     {
-        //save the inputfile
-        Main.filename = filename;
-
         //update the active fileHandler with the filename
         fileHandler.addFilename("./testing/" + filename);
 

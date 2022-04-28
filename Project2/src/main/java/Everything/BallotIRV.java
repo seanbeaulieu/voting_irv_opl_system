@@ -16,6 +16,9 @@ public class BallotIRV
      */
     private ArrayList<Candidate> candidates;
 
+    /**
+     * This ballot's id
+     */
     private int id;
 
     /**

@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * Represents a PO based Election
+ * Written by Jasper Rutherford
+ */
 public class ElectionPO extends Election
 {
     /**
