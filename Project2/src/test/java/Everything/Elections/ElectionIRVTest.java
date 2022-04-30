@@ -21,16 +21,15 @@ class ElectionIRVTest
     @DisplayName("Test ElectionIRV.readInputs()")
     void readInputs()
     {
-
         FileHandler fileHandler = new FileHandler();
         ElectionIRV electionIRV = new ElectionIRV(fileHandler,true);
-        fileHandler.addFilename("irvtest.csv");
+        fileHandler.addFilename("./testing/irvtest.txt");
 
         assertTrue(electionIRV.readInputs());
-
     }
 
     @Test
+    @DisplayName("Test CalcResults from Single File")
     void calcResults()
     {
         FileHandler fileHandler = new FileHandler();
@@ -48,6 +47,34 @@ class ElectionIRVTest
         candidates.add(rosen);
 
         assertEquals(candidates, election.getWinners());
+    }
+
+    @Test
+    @DisplayName("Test Calculate Results from Multiple Files")
+    void calcResultsFromMultiple() {
+        FileHandler fileHandler = new FileHandler();
+        String file1 = "./testing/irvm1.csv";
+        String file2 = "./testing/irvm2.csv";
+        String file3 = "./testing/irvm3.csv";
+        fileHandler.addFilename(file1);
+        fileHandler.addFilename(file2);
+        fileHandler.addFilename(file3);
+        Election election;
+        election = new ElectionIRV(fileHandler, false);
+        CandidateIRV rosen = new CandidateIRV("Rosen(D)");
+        CandidateIRV chou = new CandidateIRV("Chou(I)");
+        CandidateIRV royce = new CandidateIRV("Royce(L");
+
+        final ArrayList<CandidateIRV> candidates = new ArrayList<>();
+        candidates.add(rosen);
+        candidates.add(chou);
+        candidates.add(royce);
+
+        if (election.readInputs() == true) {
+            election.calcResults();
+        }
+
+        assertEquals(3, election.getWinners().size());
     }
 
     @Test
