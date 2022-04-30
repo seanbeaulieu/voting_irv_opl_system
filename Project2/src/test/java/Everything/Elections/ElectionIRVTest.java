@@ -78,6 +78,19 @@ class ElectionIRVTest
     }
 
     @Test
+    @DisplayName("Test to Filter Out Ballots With Half Ranked")
+    void filterBallots() {
+        FileHandler fileHandler = new FileHandler();
+        String file1 = "./testing/irvtest.txt";
+        fileHandler.addFilename(file1);
+        ElectionIRV election = new ElectionIRV(fileHandler, false);
+
+        boolean test = election.readInputs();
+
+        assertEquals(5, election.unassignedBallots.size());
+    }
+
+    @Test
     @DisplayName("Test ElectionIRV.getCandidatesFromIRVLine")
     void getCandidatesFromString() {
 
