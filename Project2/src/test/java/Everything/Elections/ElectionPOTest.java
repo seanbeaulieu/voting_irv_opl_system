@@ -14,6 +14,17 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ElectionPOTest {
 
     @Test
+    @DisplayName("Test ElectionPO.readInputs()")
+    void readInputsPO()
+    {
+        FileHandler fileHandler = new FileHandler();
+        ElectionPO electionPO = new ElectionPO(fileHandler,true);
+        fileHandler.addFilename("./testing/testPO.csv");
+
+        assertTrue(electionPO.readInputs());
+    }
+
+    @Test
     @DisplayName("Test to Retrieve A Single Winner VIA csv file using PO")
     void calculatePO() {
         FileHandler fileHandler = new FileHandler();
