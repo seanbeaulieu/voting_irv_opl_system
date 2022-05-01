@@ -12,7 +12,7 @@ import java.util.Stack;
 
 /**
  * Represents an IRV based Election
- * Written by Sean Beaulieu, Ann Huynher, and Jasper Rutherford
+ * Written by Sean Beaulieu, Ann Huynh, and Jasper Rutherford
  */
 public class ElectionIRV extends Election
 {

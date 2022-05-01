@@ -1,7 +1,6 @@
-package Everything;
+package Everything.Candidates;
 
-import Everything.Candidates.Candidate;
-import Everything.Candidates.CandidateIRV;
+import Everything.BallotIRV;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -10,6 +9,10 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Runs tests involving the CandidateIRV class
+ * Written by Ann Huynh and Sean Beaulieu
+ */
 class CandidateIRVTest {
 
     @Nested

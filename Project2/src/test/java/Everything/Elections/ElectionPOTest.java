@@ -1,7 +1,6 @@
 package Everything.Elections;
 
 import Everything.Candidates.Candidate;
-import Everything.Elections.ElectionPO;
 import Everything.FileHandler;
 
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +10,11 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ElectionPOTest {
+/**
+ * Runs tests that involve the ElectionPO class
+ * Written by Ann Huynh and Sean Beaulieu
+ */
+class ElectionPOTest {
 
     @Test
     @DisplayName("Test ElectionPO.readInputs()")

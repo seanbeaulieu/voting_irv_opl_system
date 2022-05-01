@@ -7,7 +7,11 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ElectionTest {
+/**
+ * Runs tests that involve the Election class
+ * Written by Ann Huynh and Sean Beaulieu
+ */
+class ElectionTest {
 
     @Test
     @DisplayName("Test getWinners")

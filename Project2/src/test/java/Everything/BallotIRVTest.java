@@ -9,6 +9,10 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Runs tests that involve the BallotIRV class
+ * Written by Ann Huynh and Sean Beaulieu
+ */
 class BallotIRVTest
 {
 

@@ -1,17 +1,17 @@
 package Everything;
 
-import Everything.FileHandler;
-import Everything.BallotIRV;
-
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FileHandlerTest {
+/**
+ * Runs tests that involve the FileHandler class
+ * Written by Ann Huynh and Sean Beaulieu
+ */
+class FileHandlerTest {
 
     @Test
     @DisplayName("Test to Add Files as a List")

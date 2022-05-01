@@ -8,7 +8,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CandidateOPLTest {
+/**
+ * Runs tests that involve the CandidateOPL class
+ * Written by Ann Huynh and Sean Beaulieu
+ */
+class CandidateOPLTest {
 
     @Test
     @DisplayName("Test Get Party")

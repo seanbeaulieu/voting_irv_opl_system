@@ -6,7 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CandidateTest {
+/**
+ * Runs tests involving the Candidate Class
+ * Written by Ann Huynh and Sean Beaulieu
+ */
+class CandidateTest {
 
     @Test
     @DisplayName("Test Candidate.getName()")
