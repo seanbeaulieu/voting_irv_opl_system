@@ -6,23 +6,73 @@ Instant Runoff Voting (IRV), Open Party Listing (OPL), and Popularity Only (PO).
 
 ........................................................................................................................
 
-HOW TO RUN VOTING PROGRAM
-This is the first iteration of this software. In the future, the system will have a Graphical User Interface implemented 
-to run the program. However, currently, the election official and testers must run the program through the command line. 
-The commands are explained as follows. 
+HOW TO RUN THE VOTING PROGRAM
 
-Open up a terminal window and navigate to the directory that contains the root folder of the Voting System software. 
-.......to run the program. 
+1. Navigate to "repo-Team21/Project2/src/main/java/Everything"
+2. Run Main.main
 
-Please note that on a Windows system, commands are not sensitive to uppercase or lowercase letters. 
-Hit enter after you are finished typing each command, which will be contained in quotation marks below. 
+........................................................................................................................
 
-To enter a filename (that must be located in Project2/testing) enter the command "addfilename". Then enter the file name 
-including the type (ex. "testFile.csv") at the end of the name. Once you have added the file or files that you intend to 
-run an election on, enter one of the following commands based on the type of election you would like to run:
+COMMANDS
 
-Instant Runoff Voting - "runIRV"
-Open Party Listing - "runOPL"
-Popularity Only - "runPO"
+ Note: Commands are not case sensitive. ADDFILENAME is the same as addFileName is the same as addfilename, etc.
 
-After successfully running the election, you may enter
+"addFilename" - Add a filename to the list of filenames which the program will draw inputs from.
+ - After running this command, you will be prompted to insert a filename. The program will assume that this file is in the Project2/testing/ directory. 
+ - Available until an election is ran.
+
+"deleteFilename" - Delete a filename from the list of filenames which the program will draw inputs from. 
+ - After running this command, you will be prompted to insert a filename. If this filename has already been added to the list of filenames, it will be removed. 
+ - Available until an election is ran.
+
+"shuffle" - Toggles whether or not to shuffle the vote order before running an IRV election. 
+ - Optional, defaults to true.
+ - Available until an election is ran.
+
+"runOPL" - Run an OPL election based on the files which have been supplied.
+ - Only available after at least one filename has been supplied. 
+ - Available until an election is ran.
+
+"runIRV" - Run an IRV election based on the files which have been supplied.
+ - Only available after at least one filename has been supplied. 
+ - Available until an election is ran.
+
+"runPO" - Run a PO election based on the files which have been supplied.
+ - Only available after at least one filename has been supplied. 
+ - Available until an election is ran.
+
+"generateReport" - Generate a report which contains some information about how many votes each candidate recieved. 
+ - Only available after an election has been ran. 
+
+"displayWinners" - Displays the candidates who won the election. 
+ - Only available after an election has been ran. 
+
+"exit" - Exits the program. 
+ - Note: Any files which have been generated will be blank until this command is ran and the program closes. 
+
+........................................................................................................................
+
+TESTING
+
+For testing we used JUnit, and to run the tests we do the following:
+1. Open "repo-Team21/Project2" in IntelliJ
+2. Press Alt + 1 to open the Project menu
+3. Navigate to "repo-Team21/Project2/src/test/java"
+4. Right click the "repo-Team21/Project2/src/test/java" folder (it should be green) and select "Run 'All Tests'"
+
+........................................................................................................................
+
+BUG LIST
+
+ - When using "generateReport" after a PO election, the names of the candidates display incorrectly in the report.
+ - When using "displayWinners" after a PO election, the names of the candidates display incorrectly. 
+ - "generateReport" after all election types will typically generate a file with formatting issues. Everything should be in nice columns, but it often is not. 
+
+........................................................................................................................
+
+NOTES
+
+Many of the files in the "repo-Team21/Project2/testing" folder are ".txt" files. This is because we realized late into the process that we were supposed to support
+".csv" files, and we did not have a chance to go back and convert all the test files from ".txt" to ".csv". The program does have full support for ".csv" files.
+
+........................................................................................................................
