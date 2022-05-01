@@ -249,7 +249,7 @@ public class ElectionOPL extends Election
                     allocatedSeats++;
 
                     //decrease this party's number of votes by the droop value
-                    parties.put(partyName, partyVotes - droop);
+                    parties.put(partyName, parties.get(partyName) - droop);
                 }
             }
         }
