@@ -1,0 +1,6 @@
+
+Candidate:	Peak Votes:	Winner/Loser:
+Kleinberg(R)	50003	Winner
+Rosen(D)	48000	Winner
+Royce(L)	7000	Loser
+Chou(I)	9000	Loser

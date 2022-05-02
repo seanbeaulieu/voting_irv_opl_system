@@ -1,0 +1,8 @@
+Ballot ID: 100000
+Rosen(D)
+Ballot ID: 100001
+Kleinberg(R)
+Ballot ID: 100002
+Chou(I)
+Ballot ID: 100003
+Royce(L)
